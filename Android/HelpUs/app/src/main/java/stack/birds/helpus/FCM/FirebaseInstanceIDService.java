@@ -19,6 +19,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
     private String HOST_URL = "https://dmlwlsdk07.000webhostapp.com/register.php";
     private AQuery aq;
 
+
     // 프로그램이 처음 생길시 토큰 생성
     @Override
     public void onTokenRefresh() {
@@ -41,9 +42,9 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
                     Log.d(TAG, "SUCCESS");
                 } else {
                     Log.d(TAG, "FAILED");
+
                 }
             }
         });
     }
-
 }

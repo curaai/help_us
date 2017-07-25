@@ -1,11 +1,11 @@
 package stack.birds.helpus;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView text1;
     Button btn1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("token", token);
             }
         });
+
     }
 }
