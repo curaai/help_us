@@ -56,7 +56,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         notificationManager.notify(0, mBuilder.build());
 
-
         mBuilder.setContentIntent(contentIntent);
     }
 }
