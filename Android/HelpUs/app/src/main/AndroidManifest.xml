@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="stack.birds.helpus">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,5 +19,21 @@
             </intent-filter>
         </activity>
     </application>
+
+    <service
+        android:name="com.bnt.etailers.fcm.MyFireBaseInstanceIDService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+        </intent-filter>
+    </service>
+
+    <service
+        android:name="com.bnt.etailers.fcm.GCMNotificationIntentService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
 
 </manifest>
