@@ -18,22 +18,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
+
     <service
-        android:name="com.bnt.etailers.fcm.MyFireBaseInstanceIDService"
+        android:name=".FirebaseInstanceIDService"
         android:exported="false">
         <intent-filter>
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
         </intent-filter>
     </service>
 
     <service
-        android:name="com.bnt.etailers.fcm.GCMNotificationIntentService"
+        android:name=".FirebaseMessagingService"
         android:exported="false">
         <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
         </intent-filter>
     </service>
-
 </manifest>

@@ -1,5 +1,6 @@
 package stack.birds.helpus.FCM;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -17,24 +18,14 @@ import java.util.HashMap;
 public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
     private String HOST_URL = "https://dmlwlsdk07.000webhostapp.com/register.php";
-    private AQuery aq;
 
+    public FirebaseInstanceIDService(Context context) {
+        final String token = FirebaseInstanceId.getInstance().getToken();
 
-    // 프로그램이 처음 생길시 토큰 생성
-    @Override
-    public void onTokenRefresh() {
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
-
-        sendRegistrationToServer(refreshedToken);
-    }
-
-    private void sendRegistrationToServer(String token){
-        // 서버로 토큰 보내기
         HashMap<String, String> param = new HashMap<String, String>();
-        param.put("registration_ids", token);
+        param.put("Token", token);
 
-        aq = new AQuery(getApplicationContext());
+        AQuery aq = new AQuery(context);
         aq.ajax(HOST_URL, param, String.class, new AjaxCallback<String>() {
             @Override
             public void callback(String url, String object, AjaxStatus status) {
@@ -42,8 +33,8 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
                     Log.d(TAG, "SUCCESS");
                 } else {
                     Log.d(TAG, "FAILED");
-
                 }
+                Log.d(TAG, "Token: " + token);
             }
         });
     }
