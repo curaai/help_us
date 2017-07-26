@@ -1,13 +1,15 @@
-package stack.birds.helpus;
+package stack.birds.helpus.AccountActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class LandingActivity extends AppCompatActivity {
+import stack.birds.helpus.R;
+
+public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
+        setContentView(R.layout.activity_signup);
     }
 }

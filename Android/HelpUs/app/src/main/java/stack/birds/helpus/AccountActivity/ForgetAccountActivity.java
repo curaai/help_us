@@ -1,13 +1,15 @@
-package stack.birds.helpus;
+package stack.birds.helpus.AccountActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class LoginActivity extends AppCompatActivity {
+import stack.birds.helpus.R;
+
+public class ForgetAccountActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_forget_account);
     }
 }
