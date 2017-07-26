@@ -7,17 +7,28 @@
     android:gravity="center"
     tools:context="stack.birds.helpus.MainActivity">
 
-    <TextView android:id="@+id/text_result"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView android:id="@+id/latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView android:id="@+id/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <Button android:id="@+id/btn_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button android:id="@+id/gps_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GPS ON"/>
 
 </LinearLayout>
