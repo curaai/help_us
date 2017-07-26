@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "949545654668",
+    "firebase_url": "https://call-3d957.firebaseio.com",
+    "project_id": "call-3d957",
+    "storage_bucket": "call-3d957.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949545654668:android:0d6cc52275e51a7c",
+        "android_client_info": {
+          "package_name": "stack.birds.helpus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949545654668-cavl15jjhgme56v1cj67bcc449lecph0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLzT-i0-Xek5lhhUMN59loh8sPbkqUKAc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
