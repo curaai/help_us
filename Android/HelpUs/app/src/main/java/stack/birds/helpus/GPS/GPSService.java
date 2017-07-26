@@ -17,24 +17,9 @@ public class GPSService {
     private LocationManager manager;
     private LocationListener listener;
 
-    public static double getLat() {
-        return lat;
-    }
-
-    public static void setLat(double lat) {
-        GPSService.lat = lat;
-    }
-
-    public static double getLon() {
-        return lon;
-    }
-
-    public static void setLon(double lon) {
-        GPSService.lon = lon;
-    }
-
     private static double lat, lon;
 
+    // GPS manager, listener 생성
     public GPSService(Context context) {
         manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -59,14 +44,36 @@ public class GPSService {
         };
     }
 
+    // gps가 계속 업데이트 되게함
     public void listening_gps() {
         try {
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     500,                 // 최소 시간간격 milliSecond
-                    0,                    // 최소 변경 거리
+                    1,                    // 최소 변경 거리
                     listener);
         } catch (SecurityException e) {
             Log.d("Security", e.toString());
         }
+    }
+
+    // gps 업데이트를 그만하게 함
+    public void stop_listening() {
+        manager.removeUpdates(listener);
+    }
+
+    public static double getLat() {
+        return lat;
+    }
+
+    public static void setLat(double lat) {
+        GPSService.lat = lat;
+    }
+
+    public static double getLon() {
+        return lon;
+    }
+
+    public static void setLon(double lon) {
+        GPSService.lon = lon;
     }
 }
