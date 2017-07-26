@@ -2,8 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="stack.birds.helpus">
 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <service
+        android:name=".FirebaseInstanceIDService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+    </service>
+    <service
+        android:name=".FirebaseMessagingService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+        </intent-filter>
+    </service>
 
     <application
         android:allowBackup="true"
@@ -19,20 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AccountActivity.LoginActivity" />
+        <activity android:name=".AccountActivity.LandingActivity" />
+        <activity android:name=".AccountActivity.SignupActivity" />
+        <activity android:name=".AccountActivity.ForgetAccountActivity"></activity>
     </application>
-
-    <service
-        android:name=".FirebaseMessagingService">
-        <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-        </intent-filter>
-    </service>
-
-    <service
-        android:name=".FirebaseInstanceIDService">
-        <intent-filter>
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-        </intent-filter>
-    </service>
 
 </manifest>
