@@ -2,9 +2,8 @@ package stack.birds.helpus.AccountActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ public class LandingActivity extends AppCompatActivity {
         initListeners();
     }
 
+    // 각 버튼, 텍스트 클릭시 다른 액티비티로 이동
     public void initListeners() {
         context = getApplicationContext();
 

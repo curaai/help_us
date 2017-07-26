@@ -49,8 +49,8 @@
         android:id="@+id/forget_pw_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:autoLink="all"
         android:linksClickable="true"
         android:text="Forget password?" />
