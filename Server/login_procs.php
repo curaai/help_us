@@ -7,8 +7,8 @@
   $result = mysqli_query($conn, $query);
   $row = mysqli_num_rows($result);
   if($row > 0){
-      header("Result: success");
+      header("Result: Success");
   } else{
-    echo "false";
+    header("Result: Fail");
   }
 ?>
