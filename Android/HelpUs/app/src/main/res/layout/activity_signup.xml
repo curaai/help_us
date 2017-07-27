@@ -4,69 +4,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/name_explain"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="What your name?" />
+        android:layout_height="56dp"
+        android:background="#121212">
 
-    <EditText
-        android:id="@+id/name_enter"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="input name" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:text="sign up" />
 
-    <TextView
-        android:id="@+id/ID_explain"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="ID" />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/ID_enter"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="input ID" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
-    <TextView
-        android:id="@+id/PW_explain"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="PW" />
+        <TextView
+            android:id="@+id/name_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="66dp"
+            android:textSize="12dp"
+            android:textColor="#000000"
+            android:text="What your name?" />
 
-    <EditText
-        android:id="@+id/PW_enter"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="input PW" />
+        <EditText
+            android:id="@+id/name_enter"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:textSize="14dp"
+            android:hint="input name" />
 
-    <TextView
-        android:id="@+id/rPW_explain"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="re PW" />
+        <TextView
+            android:id="@+id/ID_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:textColor="#000000"
+            android:text="ID" />
 
-    <EditText
-        android:id="@+id/rPW_enter"
+        <EditText
+            android:id="@+id/ID_enter"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:textSize="14dp"
+            android:hint="input ID" />
+
+        <TextView
+            android:id="@+id/PW_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:textColor="#000000"
+            android:text="PW" />
+
+        <EditText
+            android:id="@+id/PW_enter"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:textSize="14dp"
+            android:hint="input PW" />
+
+        <EditText
+            android:id="@+id/rPW_enter"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:inputType="textPersonName"
+            android:textSize="14dp"
+            android:hint="input re PW" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="input re PW" />
+        android:layout_height="54dp"
+        android:layout_gravity="bottom"
+        android:background="#121212">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="right"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:text="Next" />
+
+    </LinearLayout>
 
 </LinearLayout>
