@@ -32,6 +32,8 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.2.1'
     compile 'com.googlecode.android-query:android-query:0.25.9'
     testCompile 'junit:junit:4.12'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.android.support:design:26.0.0-alpha1'
 }
 
 apply plugin: 'com.google.gms.google-services'
