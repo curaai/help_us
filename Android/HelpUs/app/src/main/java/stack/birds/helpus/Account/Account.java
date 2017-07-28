@@ -15,6 +15,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +53,9 @@ public class Account {
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(URL);
+        // 한글 인코딩
+        httppost.setHeader(HTTP.CONTENT_TYPE,
+                "application/x-www-form-urlencoded;charset=UTF-8");
 
         try {
             // POST body에 요청할 데이터를 넣음
@@ -60,7 +64,8 @@ public class Account {
                 nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
 
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "EUC-KR"));
+            // url encoding 한글
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "utf-8"));
 
             //HTTP Post 요청 실행
             HttpResponse response = httpclient.execute(httppost);
