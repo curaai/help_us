@@ -14,4 +14,5 @@
   }
   $query = "UPDATE users SET Token = '$token' WHERE id= '$id'";
   $result = mysqli_query($conn, $query);
+  //완료
 ?>

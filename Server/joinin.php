@@ -19,4 +19,5 @@
   $query = "INSERT INTO users(id, pw, name) VALUES ('$id', '$pw', '$name')";
   mysqli_query($conn, $query);
   header("Result:1");
+  //완료
 ?>
