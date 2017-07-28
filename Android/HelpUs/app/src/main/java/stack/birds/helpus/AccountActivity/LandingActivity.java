@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,6 +33,7 @@ public class LandingActivity extends AppCompatActivity {
     public void initListeners() {
         context = getApplicationContext();
 
+        // 로그인
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +41,7 @@ public class LandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // 회원가입
         regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +49,7 @@ public class LandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // 비밀번호 까먹음
         forget_pw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
