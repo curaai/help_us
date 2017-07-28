@@ -4,55 +4,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#00A388"
     tools:context="stack.birds.helpus.AccountActivity.LandingActivity">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="250dp"
-            android:layout_height="365dp"
-            app:srcCompat="@drawable/icon_long_shadow" />
+        <LinearLayout
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="250dp"
-            android:layout_height="365dp"
-            app:srcCompat="@drawable/icon" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icon" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/first"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/first" />
+
+                <TextView
+                    android:id="@+id/first_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="신고를 증거로"/>
+
+                <ImageView
+                    android:id="@+id/second"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/second" />
+
+                <TextView
+                    android:id="@+id/second_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="버튼 하나로 신고를"/>
+
+                <ImageView
+                    android:id="@+id/third"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/third" />
+
+                <TextView
+                    android:id="@+id/third_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="녹음된 음성파일들이 증거로"/>
+
+                <ImageView
+                    android:id="@+id/fourth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/fourth" />
+
+                <TextView
+                    android:id="@+id/fourth_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="우리손으로 만들어요 안전한 세상"/>
+
+            </ViewFlipper>
+
+        </LinearLayout>
 
     </FrameLayout>
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="300dp"
-        android:layout_height="44dp"
-        android:layout_margin="8dp"
-        android:layout_gravity="center"
-        android:background="#00705D"
-        android:text="login" />
-
-    <Button
-        android:id="@+id/register_button_button"
-        android:layout_width="300dp"
-        android:layout_height="44dp"
-        android:layout_margin="8dp"
-        android:layout_gravity="center"
-        android:background="#35B29E"
-        android:text="register" />
-
-    <TextView
-        android:id="@+id/forget_pw_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:autoLink="all"
-        android:linksClickable="true"
-        android:text="Forget password?" />
 
 </LinearLayout>
