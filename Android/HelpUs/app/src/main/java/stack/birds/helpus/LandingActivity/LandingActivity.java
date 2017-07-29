@@ -1,6 +1,7 @@
 package stack.birds.helpus.LandingActivity;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -21,5 +22,7 @@ public class LandingActivity extends AppCompatActivity {
 
         myCustomPagerAdpater = new MyCustomPagerAdapter(getApplicationContext(), images);
         pager.setAdapter(myCustomPagerAdpater);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(pager, true);
     }
 }
