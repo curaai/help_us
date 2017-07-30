@@ -18,7 +18,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:textSize="20dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9632"
             android:text="sign up" />
 
     </LinearLayout>
@@ -78,7 +78,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="right"
             android:textSize="20dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9632"
             android:text="Next" />
 
     </LinearLayout>

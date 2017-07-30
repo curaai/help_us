@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#121212">
+        android:background="#FF9632">
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
             android:id="@+id/name_explain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="66dp"
+            android:layout_marginTop="52dp"
             android:textSize="12dp"
             android:textColor="#000000"
             android:text="What your name?" />
@@ -45,9 +45,27 @@
             android:hint="input name" />
 
         <TextView
+            android:id="@+id/email_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:textSize="12dp"
+            android:textColor="#000000"
+            android:text="E-mail" />
+
+        <EditText
+            android:id="@+id/email_enter"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:inputType="textEmailAddress"
+            android:textSize="14dp"
+            android:hint="input email" />
+
+        <TextView
             android:id="@+id/ID_explain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
             android:textSize="12dp"
             android:textColor="#000000"
             android:text="ID" />
@@ -64,6 +82,7 @@
             android:id="@+id/PW_explain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
             android:textSize="12dp"
             android:textColor="#000000"
             android:text="PW" />
@@ -90,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_gravity="bottom"
-        android:background="#121212">
+        android:background="#FF9632">
 
         <TextView
             android:id="@+id/regist_check"

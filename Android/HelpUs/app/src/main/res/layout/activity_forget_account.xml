@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#121212">
+        android:background="#FF9632">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:layout_marginLeft="16dp"
             android:textSize="20dp"
             android:textColor="#FFFFFF"
-            android:text="sign up" />
+            android:text="forget password :(" />
 
     </LinearLayout>
 
@@ -36,31 +36,15 @@
             android:layout_height="wrap_content"
             android:textSize="12dp"
             android:textColor="#000000"
-            android:text="Plz enter your ID" />
+            android:text="Plz enter your Email" />
 
         <EditText
             android:id="@+id/edit_id"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:textSize="14dp"
-            android:hint="input name" />
-
-        <TextView
-            android:id="@+id/view_pw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="Plz enter your PW" />
-
-        <EditText
-            android:id="@+id/edit_pw"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input ID" />
+            android:hint="input email" />
 
     </LinearLayout>
 
@@ -68,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_gravity="bottom"
-        android:background="#121212">
+        android:background="#FF9632">
 
         <TextView
             android:layout_width="match_parent"
@@ -78,7 +62,7 @@
             android:gravity="right"
             android:textSize="20dp"
             android:textColor="#FFFFFF"
-            android:text="Next" />
+            android:text="send" />
 
     </LinearLayout>
 
