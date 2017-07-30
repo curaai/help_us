@@ -49,6 +49,12 @@
                 android:layout_height="wrap_content"
                 android:hint="PW"/>
 
+            <EditText
+                android:id="@+id/repw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="re PW"/>
+
         </LinearLayout>
 
         <Button
