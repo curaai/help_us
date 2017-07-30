@@ -8,22 +8,12 @@
     android:gravity="center"
     tools:context="stack.birds.helpus.MainActivity">
 
-    <LinearLayout
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_pager"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FF9632">
+        android:layout_height="fill_parent"
+/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:text="Help_Us" />
-
-
-
-    </LinearLayout>
 
 </LinearLayout>
