@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -16,8 +16,8 @@ import stack.birds.helpus.R;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText name, id, pw, re_pw;
-    TextView regist_check;
+    EditText name, id, email, pw, re_pw;
+    Button signup_btn;
 
     int REGIST_FLAG = 1;
 
@@ -26,13 +26,14 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        name = (EditText) findViewById(R.id.name_enter);
-        id = (EditText) findViewById(R.id.ID_enter);
-        pw = (EditText) findViewById(R.id.PW_enter);
-        re_pw = (EditText) findViewById(R.id.rPW_enter);
+        name = (EditText) findViewById(R.id.regist_name);
+        email = (EditText) findViewById(R.id.regist_email);
+        id = (EditText) findViewById(R.id.regist_id);
+        pw = (EditText) findViewById(R.id.regist_pw);
+        re_pw = (EditText) findViewById(R.id.regist_re_pw);
 
-        regist_check = (TextView) findViewById(R.id.regist_check);
-        regist_check.setOnClickListener(new View.OnClickListener() {
+        signup_btn = (Button) findViewById(R.id.sign_up_btn);
+        signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 비밀번호 check가 다르면 다시 입력
@@ -52,6 +53,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             HashMap<String, String> regist_param = new HashMap<String, String>();
                             regist_param.put("name",  name.getText().toString());
+                            regist_param.put("email",  email.getText().toString());
                             regist_param.put("id", id.getText().toString());
                             regist_param.put("pw", pw.getText().toString());
 

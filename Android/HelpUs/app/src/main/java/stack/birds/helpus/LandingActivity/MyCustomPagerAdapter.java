@@ -18,10 +18,8 @@ import stack.birds.helpus.R;
 
 public class MyCustomPagerAdapter extends PagerAdapter {
     Context context;
-    int images[];
     LayoutInflater layoutInflater;
-
-
+    int images[];
     public MyCustomPagerAdapter(Context context, int images[]) {
         this.context = context;
         this.images = images;
