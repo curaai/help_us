@@ -53,7 +53,7 @@
                 android:id="@+id/regist_re_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="RE_PW"/>
+                android:hint="re PW"/>
 
         </LinearLayout>
 
