@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="stack.birds.helpus.AccountActivity.LandingActivity">
+    tools:context="stack.birds.helpus.LandingActivity.LandingActivity">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -24,71 +24,25 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ViewFlipper
-                android:id="@+id/flipper"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" />
 
-                <ImageView
-                    android:id="@+id/first"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/first" />
-
-                <TextView
-                    android:id="@+id/first_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="신고를 증거로"/>
-
-                <ImageView
-                    android:id="@+id/second"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/second" />
-
-                <TextView
-                    android:id="@+id/second_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="버튼 하나로 신고를"/>
-
-                <ImageView
-                    android:id="@+id/third"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/third" />
-
-                <TextView
-                    android:id="@+id/third_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="녹음된 음성파일들이 증거로"/>
-
-                <ImageView
-                    android:id="@+id/fourth"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/fourth" />
-
-                <TextView
-                    android:id="@+id/fourth_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="우리손으로 만들어요 안전한 세상"/>
-
-            </ViewFlipper>
-
-        </LinearLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabDots"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"/>
+        </RelativeLayout>
 
     </FrameLayout>
 
