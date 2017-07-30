@@ -6,121 +6,58 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FF9632">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:text="sign up" />
-
-    </LinearLayout>
-
-    <LinearLayout
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
-
-        <TextView
-            android:id="@+id/name_explain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="What your name?" />
-
-        <EditText
-            android:id="@+id/name_enter"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input name" />
-
-        <TextView
-            android:id="@+id/email_explain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="E-mail" />
-
-        <EditText
-            android:id="@+id/email_enter"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textEmailAddress"
-            android:textSize="14dp"
-            android:hint="input email" />
-
-        <TextView
-            android:id="@+id/ID_explain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="ID" />
-
-        <EditText
-            android:id="@+id/ID_enter"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input ID" />
-
-        <TextView
-            android:id="@+id/PW_explain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="PW" />
-
-        <EditText
-            android:id="@+id/PW_enter"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input PW" />
-
-        <EditText
-            android:id="@+id/rPW_enter"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input re PW" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_gravity="bottom"
         android:background="#FF9632">
 
-        <TextView
-            android:id="@+id/regist_check"
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:text="Next" />
+            android:orientation="vertical"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"/>
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"/>
+
+            <EditText
+                android:id="@+id/id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID"/>
+
+            <EditText
+                android:id="@+id/pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PW"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="48dp"
+            android:background="#ff6423"
+            android:layout_gravity="center"
+            android:text="sign up"/>
 
     </LinearLayout>
 
