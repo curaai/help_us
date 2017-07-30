@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AccountActivity.LoginActivity" />
-        <activity android:name=".AccountActivity.LandingActivity" />
+        <activity android:name=".LandingActivity.LandingActivity" />
         <activity android:name=".AccountActivity.SignupActivity" />
         <activity android:name=".AccountActivity.ForgetAccountActivity"></activity>
     </application>

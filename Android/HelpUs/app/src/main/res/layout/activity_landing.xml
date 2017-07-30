@@ -4,55 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#00A388"
-    tools:context="stack.birds.helpus.AccountActivity.LandingActivity">
+    tools:context="stack.birds.helpus.LandingActivity.LandingActivity">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="250dp"
-            android:layout_height="365dp"
-            app:srcCompat="@drawable/icon_long_shadow" />
+        <LinearLayout
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="250dp"
-            android:layout_height="365dp"
-            app:srcCompat="@drawable/icon" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icon" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabDots"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"/>
+        </RelativeLayout>
 
     </FrameLayout>
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="200dp"
-        android:layout_height="44dp"
-        android:layout_margin="8dp"
-        android:layout_gravity="center"
-        android:background="#00705D"
-        android:text="login" />
-
-    <Button
-        android:id="@+id/register_button_button"
-        android:layout_width="200dp"
-        android:layout_height="44dp"
-        android:layout_margin="8dp"
-        android:layout_gravity="center"
-        android:background="#35B29E"
-        android:text="register" />
-
-    <TextView
-        android:id="@+id/forget_pw_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:autoLink="all"
-        android:linksClickable="true"
-        android:text="Forget password?" />
 
 </LinearLayout>
