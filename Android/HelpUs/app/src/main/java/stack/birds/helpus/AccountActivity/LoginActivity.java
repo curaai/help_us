@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -17,7 +17,7 @@ import stack.birds.helpus.R;
 public class LoginActivity extends AppCompatActivity {
 
     EditText id, pw;
-    TextView login_check;
+    Button signIn;
 
     int LOGIN_FLAG = 0;
 
@@ -26,11 +26,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        id = (EditText) findViewById(R.id.edit_id);
-        pw = (EditText) findViewById(R.id.edit_pw);
+        id = (EditText) findViewById(R.id.sign_in_id);
+        pw = (EditText) findViewById(R.id.sign_in_pw);
 
-        login_check = (TextView) findViewById(R.id.login_check);
-        login_check.setOnClickListener(new View.OnClickListener() {
+        signIn = (Button) findViewById(R.id.sign_in_btn);
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HashMap<String, String> login_param = new HashMap<String, String>();

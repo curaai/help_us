@@ -40,7 +40,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/landing_icon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/icon" />
@@ -61,22 +61,36 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
-        
-        <LinearLayout
-            android:id="@+id/landing_over"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:background="#000000"
-            android:visibility="invisible">
+            <LinearLayout
+                android:id="@+id/landing_to_another"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="96dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
 
-            <TextView
-                android:textColor="#ffffff"
-                android:text="시작하기"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/landing_to_login"
+                    android:text="로그인"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+
+                <Button
+                    android:id="@+id/landing_to_signup"
+                    android:text="처음이에요"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
     </FrameLayout>
 
 </LinearLayout>

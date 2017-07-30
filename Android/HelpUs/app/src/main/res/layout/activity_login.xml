@@ -5,82 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context="stack.birds.helpus.AccountActivity.LoginActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#121212">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="6.5"
+       android:orientation="vertical"
+       android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            android:textColor="#FF9632"
-            android:text="sign up" />
+      <ImageView
+          android:layout_width="150dp"
+          android:layout_height="150dp"
+          android:src="@drawable/icon"/>
 
-    </LinearLayout>
+      <TextView
+          android:text="신고기록과 녹음 파일을"
+          android:textSize="32dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="36dp"/>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+      <TextView
+          android:text="확인해 보세요"
+          android:textSize="42dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"/>
 
-        <TextView
-            android:id="@+id/view_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="Plz enter your ID" />
 
-        <EditText
-            android:id="@+id/edit_id"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input name" />
+   </LinearLayout>
 
-        <TextView
-            android:id="@+id/view_pw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:text="Plz enter your PW" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="3.5"
+       android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_pw"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="textPersonName"
-            android:textSize="14dp"
-            android:hint="input ID" />
+      <EditText
+          android:id="@+id/sign_in_id"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="ID"/>
+      <EditText
+          android:id="@+id/sign_in_pw"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="PW"/>
+      <Button
+          android:id="@+id/sign_in_btn"
+          android:text="KEEP GOING"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"/>
+   </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_gravity="bottom"
-        android:background="#121212">
-
-        <TextView
-            android:id="@+id/login_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:textSize="20dp"
-            android:textColor="#FF9632"
-            android:text="Next" />
-
-    </LinearLayout>
 
 </LinearLayout>

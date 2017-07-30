@@ -1,14 +1,17 @@
 package stack.birds.helpus.LandingActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import stack.birds.helpus.AccountActivity.LoginActivity;
+import stack.birds.helpus.AccountActivity.SignupActivity;
 import stack.birds.helpus.R;
 
 public class LandingActivity extends AppCompatActivity {
@@ -19,8 +22,9 @@ public class LandingActivity extends AppCompatActivity {
     MyCustomPagerAdapter myCustomPagerAdpater;
 
     TextView smallText, bigText;
+    Button toSignin, toSignup;
     ViewPager pager;
-    LinearLayout over, first_view_group;
+    LinearLayout moveAnother;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +40,37 @@ public class LandingActivity extends AppCompatActivity {
 
         smallText = (TextView) findViewById(R.id.landing_text_small);
         bigText = (TextView) findViewById(R.id.landing_text_big);
-        over = (LinearLayout) findViewById(R.id.landing_over);
-        first_view_group = (LinearLayout) findViewById(R.id.landing_over);
+        toSignin = (Button) findViewById(R.id.landing_to_login);
+        toSignup = (Button) findViewById(R.id.landing_to_signup);
+        moveAnother = (LinearLayout) findViewById(R.id.landing_to_another);
 
-        first_view_group.bringToFront();
+        moveAnother.setVisibility(View.INVISIBLE);
+
+        btnInit();
 
         PagerThread thread = new PagerThread();
         thread.start();
     }
 
+    private void btnInit() {
+        toSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        toSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 
     class PagerThread extends Thread {
         public void run() {
@@ -66,9 +92,9 @@ public class LandingActivity extends AppCompatActivity {
                         int position = pager.getCurrentItem();
 
                         if(position == images.length - 1) {
-                            over.setVisibility(View.VISIBLE);
+                            moveAnother.setVisibility(View.VISIBLE);
                         } else {
-                            over.setVisibility(View.INVISIBLE);
+                            moveAnother.setVisibility(View.INVISIBLE);
                         }
 
                         if (smallTextList[position] == "") {
@@ -79,7 +105,6 @@ public class LandingActivity extends AppCompatActivity {
                         }
 
                         bigText.setText(bigTextList[position]);
-                        first_view_group.bringToFront();
                     }
                 }
             });
