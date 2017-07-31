@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import stack.birds.helpus.AccountActivity.LoginActivity;
 import stack.birds.helpus.AccountActivity.SignupActivity;
+import stack.birds.helpus.Adapter.LandingPagerAdapter;
 import stack.birds.helpus.R;
 
 public class LandingActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class LandingActivity extends AppCompatActivity {
     int images[] = {R.drawable.first, R.drawable.second, R.drawable.third, R.drawable.fourth};
     String smallTextList[] = {"", "", "녹음된 음성파일들이", "우리손으로 만들어요"};
     String bigTextList[] = {"신고를 증거로", "버튼하나로 신고를", "증거로", "안전한 세상"};
-    MyCustomPagerAdapter myCustomPagerAdpater;
+    LandingPagerAdapter landingPagerAdpater;
 
     TextView smallText, bigText;
     Button toSignin, toSignup;
@@ -33,8 +34,8 @@ public class LandingActivity extends AppCompatActivity {
 
         pager = (ViewPager) findViewById(R.id.pager);
 
-        myCustomPagerAdpater = new MyCustomPagerAdapter(getApplicationContext(), images);
-        pager.setAdapter(myCustomPagerAdpater);
+        landingPagerAdpater = new LandingPagerAdapter(getApplicationContext(), images);
+        pager.setAdapter(landingPagerAdpater);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(pager, true);
 

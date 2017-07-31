@@ -1,4 +1,4 @@
-package stack.birds.helpus.Account;
+package stack.birds.helpus.Class;
 
 import android.app.Activity;
 import android.content.Context;

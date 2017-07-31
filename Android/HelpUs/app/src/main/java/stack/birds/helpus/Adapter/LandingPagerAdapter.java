@@ -1,4 +1,4 @@
-package stack.birds.helpus.LandingActivity;
+package stack.birds.helpus.Adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -16,11 +16,11 @@ import stack.birds.helpus.R;
  * Created by dsm2016 on 2017-07-29.
  */
 
-public class MyCustomPagerAdapter extends PagerAdapter {
+public class LandingPagerAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
     int images[];
-    public MyCustomPagerAdapter(Context context, int images[]) {
+    public LandingPagerAdapter(Context context, int images[]) {
         this.context = context;
         this.images = images;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

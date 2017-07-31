@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import java.util.HashMap;
 
-import stack.birds.helpus.Account.Account;
+import stack.birds.helpus.Class.Account;
 import stack.birds.helpus.MainActivity;
 import stack.birds.helpus.R;
 

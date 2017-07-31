@@ -5,7 +5,7 @@
     android:gravity="center">
 
     <TextView
-        android:text="setting"
+        android:text="home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

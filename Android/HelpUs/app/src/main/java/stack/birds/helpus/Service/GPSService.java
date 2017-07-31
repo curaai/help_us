@@ -1,12 +1,10 @@
-package stack.birds.helpus.GPS;
+package stack.birds.helpus.Service;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 
 /**
