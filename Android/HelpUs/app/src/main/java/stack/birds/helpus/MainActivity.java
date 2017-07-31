@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
 
+        // 메인 액티비티의 탭
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("HOME"));
         tabLayout.addTab(tabLayout.newTab().setText("신고하기"));
@@ -37,15 +38,18 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("신고접수"));
         tabLayout.addTab(tabLayout.newTab().setText("설정"));
 
+        // 각 탭의 아이콘 설정
         for(int i = 0; i < icons.length; i++)
             tabLayout.getTabAt(i).setIcon(icons[i]);
 
+        // viewpager 생성 밑 mainPagerAdapter 설정
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         pagerAdapter = new MainPagerAdapter(
                 getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            // 탭이 선택됬을 때 해당 viewPager page로 이동
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());

@@ -47,16 +47,19 @@ public class SignupActivity extends AppCompatActivity {
 
                     if(str_id.length() < 6 && str_pw.length() < 7 ) {
                         Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "아이디 6글자 이상, 비밀전호 7자리 이상 설정해 주세요.", Snackbar.LENGTH_LONG).show();
+                                , "아이디 6글자 이상, 비밀번호 7자리 이상 설정해 주세요.", Snackbar.LENGTH_LONG).show();
                     } else {
+                        // 비밀번호에 문자가 들어가는지 check
                         if(str_pw.matches(".*[a-zA-Z]+.*")) {
 
+                            // 사용자가 입력한 회원가입시 필요한 정보들을 HashMap으로 저장
                             HashMap<String, String> regist_param = new HashMap<String, String>();
                             regist_param.put("name",  name.getText().toString());
                             regist_param.put("email",  email.getText().toString());
                             regist_param.put("id", id.getText().toString());
                             regist_param.put("pw", pw.getText().toString());
 
+                            // 사용자 정보 HashMap을 서버로 보내 result를 확인
                             Account account = new Account(getApplicationContext());
                             int result = account.requestToServer(REGIST_FLAG, regist_param);
                             // 만약 회원가입 성공시 로그인창으로 이동

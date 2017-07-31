@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 로그인시 필요한 아이디와 비밀번호 HashMap 저장
                 HashMap<String, String> login_param = new HashMap<String, String>();
                 login_param.put("id", id.getText().toString());
                 login_param.put("pw", pw.getText().toString());
