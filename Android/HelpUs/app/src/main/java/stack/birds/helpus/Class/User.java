@@ -5,13 +5,35 @@ package stack.birds.helpus.Class;
  */
 
 public class User {
-    public String name;
-    public String id;
-    public String phoneNum;
+    private String name, id, phoneNum;
 
     public User(String name, String id, String phoneNum) {
         this.name = name;
         this.id = id;
+        this.phoneNum = phoneNum;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
 }

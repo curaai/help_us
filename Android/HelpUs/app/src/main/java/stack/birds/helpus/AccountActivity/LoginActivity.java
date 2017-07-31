@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import java.util.HashMap;
 
-import stack.birds.helpus.Class.Account;
+import stack.birds.helpus.Service.AccountService;
 import stack.birds.helpus.MainActivity;
 import stack.birds.helpus.R;
 
@@ -39,13 +39,13 @@ public class LoginActivity extends AppCompatActivity {
                 login_param.put("pw", pw.getText().toString());
 
                 // 입력받은 값으로 로그인
-                Account account = new Account(getApplicationContext());
-                int result = account.requestToServer(LOGIN_FLAG, login_param);
+                AccountService accountService = new AccountService(getApplicationContext());
+                int result = accountService.requestToServer(LOGIN_FLAG, login_param);
 
                 // 로그인 성공
                 if(result == 1) {
                     // 자동 로그인
-                    account.registAutoLogin(id.getText().toString(), pw.getText().toString());
+                    accountService.registAutoLogin(id.getText().toString(), pw.getText().toString());
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);

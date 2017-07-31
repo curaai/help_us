@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import java.util.HashMap;
 
-import stack.birds.helpus.Class.Account;
+import stack.birds.helpus.Service.AccountService;
 import stack.birds.helpus.MainActivity;
 import stack.birds.helpus.R;
 
@@ -60,12 +60,12 @@ public class SignupActivity extends AppCompatActivity {
                             regist_param.put("pw", pw.getText().toString());
 
                             // 사용자 정보 HashMap을 서버로 보내 result를 확인
-                            Account account = new Account(getApplicationContext());
-                            int result = account.requestToServer(REGIST_FLAG, regist_param);
+                            AccountService accountService = new AccountService(getApplicationContext());
+                            int result = accountService.requestToServer(REGIST_FLAG, regist_param);
                             // 만약 회원가입 성공시 로그인창으로 이동
                             if(result == 1) {
                                 // 회원가입성공시 아이디와 비밀번호를 자동로그인시킴
-                                account.registAutoLogin(id.getText().toString(), pw.getText().toString());
+                                accountService.registAutoLogin(id.getText().toString(), pw.getText().toString());
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
