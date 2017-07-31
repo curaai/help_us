@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     MainPagerAdapter pagerAdapter;
 
+    final int[] icons = new int[] {R.drawable.home, R.drawable.send, R.drawable.list, R.drawable.icon, R.drawable.setting};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("신고내역"));
         tabLayout.addTab(tabLayout.newTab().setText("신고접수"));
         tabLayout.addTab(tabLayout.newTab().setText("설정"));
+
+        for(int i = 0; i < icons.length; i++)
+            tabLayout.getTabAt(i).setIcon(icons[i]);
 
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         pagerAdapter = new MainPagerAdapter(
