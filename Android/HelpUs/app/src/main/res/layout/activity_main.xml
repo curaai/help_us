@@ -25,6 +25,7 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:tabBackground="@drawable/tab_selector"/>
+        app:tabBackground="@drawable/tab_selector"
+        app:tabIndicatorHeight="0dp"/>
 
 </RelativeLayout>
