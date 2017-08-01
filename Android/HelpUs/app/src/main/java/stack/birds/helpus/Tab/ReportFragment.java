@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ import stack.birds.helpus.R;
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
     private Button button, showListBtn;
+    private ImageView mp3_select;
     private TextView currentTime, musicDuration;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
@@ -78,8 +80,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                     TypedValue.COMPLEX_UNIT_DIP, 48.f, getResources().getDisplayMetrics()));
             bottomSheetBehavior.setHideable(false);
 
-            showListBtn = (Button) view.findViewById(R.id.show_list);
-            showListBtn.setOnClickListener(new View.OnClickListener() {
+            mp3_select = (ImageView) view.findViewById(R.id.mp3_select);
+            mp3_select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
@@ -90,7 +92,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 }
             });
 
-            button = (Button) view.findViewById(R.id.mp3_select);
             recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
 
             initRecyclerView();
@@ -98,7 +99,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             currentTime = (TextView) view.findViewById(R.id.current_time);
             musicDuration = (TextView) view.findViewById(R.id.mp3_duration);
 
-            button = (Button) view.findViewById(R.id.mp3_select);
             button.setOnClickListener(this);
 
             mPlayer = new MediaPlayer();
