@@ -5,12 +5,14 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ import stack.birds.helpus.R;
 
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
-    private Button button;
+    private Button button, showListBtn;
     private TextView currentTime, musicDuration;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
@@ -53,6 +55,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +71,25 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                     1
             );
         } else {
+            View bottomSheetRecycler = view.findViewById(R.id.bottom_sheet1);
+            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecycler);
+
+            bottomSheetBehavior.setPeekHeight((int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 48.f, getResources().getDisplayMetrics()));
+            bottomSheetBehavior.setHideable(false);
+
+            showListBtn = (Button) view.findViewById(R.id.show_list);
+            showListBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    } else {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+                }
+            });
+
             button = (Button) view.findViewById(R.id.mp3_select);
             recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
 
@@ -81,6 +103,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
 
             mPlayer = new MediaPlayer();
             seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
+
+
         }
 
         return view;
