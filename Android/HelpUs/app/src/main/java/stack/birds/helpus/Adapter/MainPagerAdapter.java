@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import stack.birds.helpus.Tab.HomeFragment;
+import stack.birds.helpus.Tab.ContactFragment;
 import stack.birds.helpus.Tab.ReceiveFragment;
 import stack.birds.helpus.Tab.ReportFragment;
 import stack.birds.helpus.Tab.ReportListFragment;
@@ -26,8 +26,8 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+                ContactFragment contactFragment = new ContactFragment();
+                return contactFragment;
             case 1:
                 ReportFragment reportFragment = new ReportFragment();
                 return reportFragment;

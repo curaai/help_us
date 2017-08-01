@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -47,8 +46,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     private String path = "/mnt/shared/Other";
 //    private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
-
-    private Handler handler;
 
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
@@ -103,15 +100,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
 
             mPlayer = new MediaPlayer();
             seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
-
-
         }
 
         return view;
     }
 
     // 버튼 클릭시 음악재생
-    // TODO recycler View가 밑에서 위로 애니메이션으로 올라옴
     @Override
     public void onClick(View v) {
         // 만약 파일 읽는 권한이 없으면 권한을 얻고 재생
@@ -185,8 +179,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 } catch (IOException e) {
                     Log.d(TAG, e.toString());
                 }
-
-                // TODO 올라왔던 recycler View가 다시 밑으로 애니메이션을 써서 내려감
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

@@ -66,10 +66,28 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/report_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="제목을 입력하세요."/>
+
+        <EditText
+            android:id="@+id/report_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="3"
+            android:hint="신고 내용을 입력하세요."/>
+
+        <Button
+            android:id="@+id/report_btn"
+            android:text="전송"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ff7f00"/>
+
         </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/bottom_sheet1"
