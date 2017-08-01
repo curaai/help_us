@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import java.util.HashMap;
 
-import stack.birds.helpus.Class.Account;
+import stack.birds.helpus.Service.AccountService;
 import stack.birds.helpus.MainActivity;
 import stack.birds.helpus.R;
 
@@ -47,22 +47,25 @@ public class SignupActivity extends AppCompatActivity {
 
                     if(str_id.length() < 6 && str_pw.length() < 7 ) {
                         Snackbar.make(getWindow().getDecorView().getRootView()
-                                , "아이디 6글자 이상, 비밀전호 7자리 이상 설정해 주세요.", Snackbar.LENGTH_LONG).show();
+                                , "아이디 6글자 이상, 비밀번호 7자리 이상 설정해 주세요.", Snackbar.LENGTH_LONG).show();
                     } else {
+                        // 비밀번호에 문자가 들어가는지 check
                         if(str_pw.matches(".*[a-zA-Z]+.*")) {
 
+                            // 사용자가 입력한 회원가입시 필요한 정보들을 HashMap으로 저장
                             HashMap<String, String> regist_param = new HashMap<String, String>();
                             regist_param.put("name",  name.getText().toString());
                             regist_param.put("email",  email.getText().toString());
                             regist_param.put("id", id.getText().toString());
                             regist_param.put("pw", pw.getText().toString());
 
-                            Account account = new Account(getApplicationContext());
-                            int result = account.requestToServer(REGIST_FLAG, regist_param);
+                            // 사용자 정보 HashMap을 서버로 보내 result를 확인
+                            AccountService accountService = new AccountService(getApplicationContext());
+                            int result = accountService.requestToServer(REGIST_FLAG, regist_param);
                             // 만약 회원가입 성공시 로그인창으로 이동
                             if(result == 1) {
                                 // 회원가입성공시 아이디와 비밀번호를 자동로그인시킴
-                                account.registAutoLogin(id.getText().toString(), pw.getText().toString());
+                                accountService.registAutoLogin(id.getText().toString(), pw.getText().toString());
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);

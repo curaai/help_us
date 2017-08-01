@@ -1,4 +1,4 @@
-package stack.birds.helpus.Class;
+package stack.birds.helpus.Service;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,7 +25,7 @@ import java.util.List;
  * Created by sch on 2017-07-28.
  */
 
-public class Account {
+public class AccountService {
     private StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
     private String REGIST_URL = "https://dmlwlsdk07.000webhostapp.com/joinin.php";
@@ -39,7 +39,7 @@ public class Account {
     private Context context;
     private SharedPreferences auto_login;
 
-    public Account(Context context) {
+    public AccountService(Context context) {
         this.context = context;
          auto_login = context.getSharedPreferences("auto_login", Activity.MODE_PRIVATE);
     }

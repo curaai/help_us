@@ -36,6 +36,7 @@ public class LandingActivity extends AppCompatActivity {
 
         landingPagerAdpater = new LandingPagerAdapter(getApplicationContext(), images);
         pager.setAdapter(landingPagerAdpater);
+        // Landing pager 밑 dot 설정
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(pager, true);
 
@@ -53,6 +54,7 @@ public class LandingActivity extends AppCompatActivity {
         thread.start();
     }
 
+    // 버튼 클릭시 해당하는 액티비티로 이동
     private void btnInit() {
         toSignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +88,7 @@ public class LandingActivity extends AppCompatActivity {
 
                 }
 
+                // 현재 페이지가 마지막 페이지 일경우 안보이게 해뒀던 버튼을 생성
                 @Override
                 public void onPageScrollStateChanged(int state) {
                     if (state == 2) {
@@ -98,6 +101,7 @@ public class LandingActivity extends AppCompatActivity {
                             moveAnother.setVisibility(View.INVISIBLE);
                         }
 
+                        // 작은 글씨가 없을 경우에는 smallText의 사이즈를 줄여 bigText가 위로 정렬되게 함
                         if (smallTextList[position] == "") {
                             smallText.setTextSize(0);
                         } else {
