@@ -12,9 +12,9 @@ import stack.birds.helpus.R;
  * Created by sch on 2017-07-31.
  */
 
-public class HomeFragment extends Fragment {
+public class ContactFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_contact, container, false);
     }
 }

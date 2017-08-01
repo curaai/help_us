@@ -4,17 +4,19 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -34,7 +36,8 @@ import stack.birds.helpus.R;
 
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
-    private Button button;
+    private Button button, showListBtn;
+    private ImageView mp3_select;
     private TextView currentTime, musicDuration;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
@@ -44,8 +47,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
 //    private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
 
-    private Handler handler;
-
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
     public static String[] PERMISSIONS_STORAGE = {
@@ -53,6 +54,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +70,25 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                     1
             );
         } else {
-            button = (Button) view.findViewById(R.id.mp3_select);
+            View bottomSheetRecycler = view.findViewById(R.id.bottom_sheet1);
+            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecycler);
+
+            bottomSheetBehavior.setPeekHeight((int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 48.f, getResources().getDisplayMetrics()));
+            bottomSheetBehavior.setHideable(false);
+
+            mp3_select = (ImageView) view.findViewById(R.id.mp3_select);
+            mp3_select.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    } else {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+                }
+            });
+
             recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
 
             initRecyclerView();
@@ -76,7 +96,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             currentTime = (TextView) view.findViewById(R.id.current_time);
             musicDuration = (TextView) view.findViewById(R.id.mp3_duration);
 
-            button = (Button) view.findViewById(R.id.mp3_select);
             button.setOnClickListener(this);
 
             mPlayer = new MediaPlayer();
@@ -87,7 +106,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     }
 
     // 버튼 클릭시 음악재생
-    // TODO recycler View가 밑에서 위로 애니메이션으로 올라옴
     @Override
     public void onClick(View v) {
         // 만약 파일 읽는 권한이 없으면 권한을 얻고 재생
@@ -161,8 +179,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 } catch (IOException e) {
                     Log.d(TAG, e.toString());
                 }
-
-                // TODO 올라왔던 recycler View가 다시 밑으로 애니메이션을 써서 내려감
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
