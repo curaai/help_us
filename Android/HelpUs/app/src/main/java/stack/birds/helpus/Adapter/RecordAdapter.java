@@ -19,11 +19,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHol
     private List<Record> recList;
     Record rec;
 
-    public interface OnItemClickListener {
-        void onItemClick(Record item);
-    }
 
-    private final OnItemClickListener listener;
+    private final View.OnClickListener listener;
 
     public class RecViewHolder extends RecyclerView.ViewHolder {
         public TextView fileName, fileModified;
@@ -35,7 +32,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHol
         }
     }
 
-    public RecordAdapter(List<Record> recList, OnItemClickListener listener) {
+    public RecordAdapter(List<Record> recList, View.OnClickListener listener) {
         this.listener = listener;
         this.recList = recList;
     }
@@ -44,6 +41,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHol
     public RecViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.record_list_row, parent, false);
+        itemView.setOnClickListener(listener);
         return new RecViewHolder(itemView);
     }
 
@@ -52,13 +50,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHol
         rec = recList.get(position);
         holder.fileName.setText(rec.getFileName());
         holder.fileModified.setText(rec.getmodifyDate());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(rec);
-            }
-        });
     }
 
     @Override

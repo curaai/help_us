@@ -39,6 +39,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
 
     private List<Record> recList;
     private String path = "/mnt/shared/Other";
+//    private String path = "/storage/emulated/0/Music";
 
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
@@ -144,9 +145,12 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     private void initRecyclerView() {
         recList = getRecFiles(path);
 
-        recAdpater = new RecordAdapter(recList, new RecordAdapter.OnItemClickListener() {
-            @Override public void onItemClick(Record item) {
-                Toast.makeText(getContext(), item.getFileName(), Toast.LENGTH_LONG).show();
+        recAdpater = new RecordAdapter(recList, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = recyclerView.getChildLayoutPosition(v);
+                Toast.makeText(getContext(), recList.get(position).getFileName(), Toast.LENGTH_SHORT).show();
+
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
