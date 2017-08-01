@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,12 +37,16 @@ import stack.birds.helpus.R;
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
     private Button button;
+    private TextView currentTime, musicDuration;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
 
     private List<Record> recList;
-    private String path = "/mnt/shared/Other";
-//    private String path = "/storage/emulated/0/Music";
+//    private String path = "/mnt/shared/Other";
+    private String path = Environment.getExternalStorageDirectory() + "/Music";
+    private String TAG = "Report";
+
+    private Handler handler;
 
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
@@ -53,52 +60,39 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report, container, false);
 
-        button = (Button) view.findViewById(R.id.mp3_select);
-        recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
-
-        initRecyclerView();
-
-        button = (Button) view.findViewById(R.id.mp3_select);
-        button.setOnClickListener(this);
-
-        mPlayer = new MediaPlayer();
-        seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
-        seekBar.setMax(mPlayer.getDuration());
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                if(fromUser)
-                    mPlayer.seekTo(progress);
-            }
-        });
-
-        return view;
-    }
-
-    // 버튼 클릭시 음악재생
-    @Override
-    public void onClick(View v) {
-        // 만약 파일 읽는 권한이 없으면 권한을 얻고 재생
+        // ReportFragment 를 실행하기전에 mp3데이터에 대한 권한을 미리 획득한 후에 프래그먼트를 시작한다.
         int permission = ActivityCompat.checkSelfPermission(
                 getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
         if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                     getActivity(),
                     PERMISSIONS_STORAGE,
                     1
             );
+        } else {
+            button = (Button) view.findViewById(R.id.mp3_select);
+            recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
+
+            initRecyclerView();
+
+            currentTime = (TextView) view.findViewById(R.id.current_time);
+            musicDuration = (TextView) view.findViewById(R.id.mp3_duration);
+
+            button = (Button) view.findViewById(R.id.mp3_select);
+            button.setOnClickListener(this);
+
+            mPlayer = new MediaPlayer();
+            seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
         }
 
+        return view;
+    }
+
+    // 버튼 클릭시 음악재생
+    // TODO recycler View가 밑에서 위로 애니메이션으로 올라옴
+    @Override
+    public void onClick(View v) {
+        // 만약 파일 읽는 권한이 없으면 권한을 얻고 재생
         if (mPlayer.isPlaying()) {
             // 재생중이면 실행될 작업 (정지)
             mPlayer.stop();
@@ -119,6 +113,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             button.setText("STOP");
 
             Thread();
+            setCurrentTime();
         }
     }
 
@@ -148,9 +143,26 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         recAdpater = new RecordAdapter(recList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = recyclerView.getChildLayoutPosition(v);
-                Toast.makeText(getContext(), recList.get(position).getFileName(), Toast.LENGTH_SHORT).show();
+                // 만약 재생중에 다른 mp3가 클릭 되었으면 현재 재생을 멈추고 mPlayer를 다시 생성
+                if(mPlayer.isPlaying()) {
+                    mPlayer.stop();
+                }
 
+                button.setText("START");
+                mPlayer = new MediaPlayer();
+                // 클릭된 view(item)을 가져와 원래 경로 + '/' + 파일이름 으로 mp3데이터를 인식시킴
+                int position = recyclerView.getChildLayoutPosition(v);
+                try {
+                    mPlayer.setDataSource(path + '/' + recList.get(position).getFileName());
+                    mPlayer.prepare();
+
+                    // 해당 mp3 데이터에 대한 seekbar 설정
+                    initSeekBar();
+                } catch (IOException e) {
+                    Log.d(TAG, e.toString());
+                }
+
+                // TODO 올라왔던 recycler View가 다시 밑으로 애니메이션을 써서 내려감
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -159,6 +171,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         recyclerView.setAdapter(recAdpater);
 
     }
+
+    // path 에 대해 listdir 을 실행하여 각 파일들의 이름과 날짜를 받아옴
     private List<Record> getRecFiles(String path) {
         List<Record> recList = new ArrayList<Record>();
 
@@ -167,9 +181,45 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         for (File inFile : files) {
 
             Record rec = new Record(inFile.getName(), new Date(inFile.lastModified()));
-            Log.d("current file name", inFile.getName());
             recList.add(rec);
         }
         return recList;
+    }
+
+    private void initSeekBar() {
+        seekBar.setMax(mPlayer.getDuration());
+        int end_minute = mPlayer.getDuration() / 60000;
+        int end_second = (mPlayer.getDuration() % 60000) / 1000;
+        musicDuration.setText(end_minute + ":" + end_second);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                if(fromUser)
+                    mPlayer.seekTo(progress);
+            }
+        });
+    }
+
+    private void setCurrentTime() {
+        handler = new Handler(Looper.myLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                // 현재 재생 중인 timestamp를 text로 설정
+                int start_minute = mPlayer.getCurrentPosition() / 60000;
+                int start_second = (mPlayer.getCurrentPosition() % 60000) / 1000;
+                currentTime.setText(start_minute + ":" + start_second);
+            }
+        });
     }
 }
