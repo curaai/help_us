@@ -4,9 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -42,8 +40,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     private RecordAdapter recAdpater;
 
     private List<Record> recList;
-//    private String path = "/mnt/shared/Other";
-    private String path = Environment.getExternalStorageDirectory() + "/Music";
+    private String path = "/mnt/shared/Other";
+//    private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
 
     private Handler handler;
@@ -103,8 +101,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            mPlayer.seekTo(0);
 
+            mPlayer.seekTo(0);
             button.setText("START");
             seekBar.setProgress(0);
         } else {
@@ -112,8 +110,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             mPlayer.start();
             button.setText("STOP");
 
+            currentTime.post(UpdateTime);
             Thread();
-            setCurrentTime();
         }
     }
 
@@ -153,11 +151,13 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 // 클릭된 view(item)을 가져와 원래 경로 + '/' + 파일이름 으로 mp3데이터를 인식시킴
                 int position = recyclerView.getChildLayoutPosition(v);
                 try {
-                    mPlayer.setDataSource(path + '/' + recList.get(position).getFileName());
+                    mPlayer.setDataSource(path + "/" + recList.get(position).getFileName());
                     mPlayer.prepare();
 
                     // 해당 mp3 데이터에 대한 seekbar 설정
                     initSeekBar();
+
+
                 } catch (IOException e) {
                     Log.d(TAG, e.toString());
                 }
@@ -171,6 +171,23 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         recyclerView.setAdapter(recAdpater);
 
     }
+
+    // mp3파일이 재생중일 때 현재 시간이 계속 바뀜
+    private Runnable UpdateTime = new Runnable() {
+        public void run() {
+            int currentDuration;
+            if (mPlayer.isPlaying()) {
+                currentDuration = mPlayer.getCurrentPosition();
+                int start_minute = currentDuration / 60000;
+                int start_second = (currentDuration % 60000) / 1000;
+                currentTime.setText(start_minute + ":" + start_second);
+
+                currentTime.postDelayed(this, 1000);
+            }else {
+                currentTime.removeCallbacks(this);
+            }
+        }
+    };
 
     // path 에 대해 listdir 을 실행하여 각 파일들의 이름과 날짜를 받아옴
     private List<Record> getRecFiles(String path) {
@@ -190,6 +207,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         seekBar.setMax(mPlayer.getDuration());
         int end_minute = mPlayer.getDuration() / 60000;
         int end_second = (mPlayer.getDuration() % 60000) / 1000;
+        currentTime.setText("0:0");
         musicDuration.setText(end_minute + ":" + end_second);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -206,19 +224,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                                           boolean fromUser) {
                 if(fromUser)
                     mPlayer.seekTo(progress);
-            }
-        });
-    }
-
-    private void setCurrentTime() {
-        handler = new Handler(Looper.myLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                // 현재 재생 중인 timestamp를 text로 설정
-                int start_minute = mPlayer.getCurrentPosition() / 60000;
-                int start_second = (mPlayer.getCurrentPosition() % 60000) / 1000;
-                currentTime.setText(start_minute + ":" + start_second);
             }
         });
     }
