@@ -12,7 +12,8 @@
         android:orientation="vertical"
         android:gravity="bottom|center_horizontal"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp">
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/mp3_select"
@@ -91,7 +92,6 @@
         android:id="@+id/bottom_sheet1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:gravity="center"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -99,7 +99,7 @@
             android:id="@+id/record_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="30dp"
             android:clipToPadding="false" >
         </android.support.v7.widget.RecyclerView>
 

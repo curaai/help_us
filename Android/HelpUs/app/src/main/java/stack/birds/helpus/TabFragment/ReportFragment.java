@@ -2,6 +2,8 @@ package stack.birds.helpus.TabFragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -11,11 +13,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -31,7 +31,6 @@ import java.util.List;
 import stack.birds.helpus.Adapter.RecordAdapter;
 import stack.birds.helpus.Class.Record;
 import stack.birds.helpus.R;
-import stack.birds.helpus.Service.AccountService;
 
 /**
  * Created by dsm2016 on 2017-07-31.
@@ -40,9 +39,10 @@ import stack.birds.helpus.Service.AccountService;
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
     private ImageView mp3_select, play_img, reset_img;
+    private LayerDrawable layer;
+    private GradientDrawable shape;
     private TextView currentTime, musicDuration;
     private EditText title, body;
-    private Button reportBtn;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
 
@@ -50,6 +50,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     private String path = "/mnt/shared/Other";
 //    private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
+    private String parseColor = "#ff7f00";
 
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
@@ -77,12 +78,14 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             View bottomSheetRecycler = view.findViewById(R.id.bottom_sheet1);
             bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecycler);
 
-            bottomSheetBehavior.setPeekHeight((int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 72.f, getResources().getDisplayMetrics()));
+            bottomSheetBehavior.setPeekHeight(0);
             bottomSheetBehavior.setHideable(false);
+
 
             // 녹음 아이콘 클릭시 밑에서 bottom sheet로 recyclerview가 올라옴
             mp3_select = (ImageView) view.findViewById(R.id.mp3_select);
+
+
             mp3_select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -163,11 +166,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 // mp3 데이터랑 gps 데이터 가져오기
 
                 // mp3 데이터 보내기 성공하면 return 1;
-                AccountService account = new AccountService(getContext());
-                int res = account.reportToServer(); // TODO 신고시 필요한 데이터들 넣어서 신고하기
-                if (res == 1) {
-                    // TODO 전송 완료 페이지로 넘어가기
-                }
+//                AccountService account = new AccountService(getContext());
+//                int res = account.reportToServer(); // TODO 신고시 필요한 데이터들 넣어서 신고하기
+//                if (res == 1) {
+//                    // TODO 전송 완료 페이지로 넘어가기
+//                }
         }
 
     }
@@ -198,9 +201,16 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         recAdpater = new RecordAdapter(recList, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 만약 재생중에 다른 mp3가 클릭 되었으면 현재 재생을 멈추고 mPlayer를 다시 생성
+
+                // 리스트에서 click 됬을 때 리스트가 닫히면서 노래 선택
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                // mp3가 선택 됬으므로 색깔 수정
+                mp3_select.setImageResource(R.drawable.color_record);
+
+                // 만약 재생중에 다른 mp3가 클릭 되었을 때 재생 취소 및 아이콘 변경
                 if(mPlayer.isPlaying()) {
                     mPlayer.stop();
+                    play_img.setImageResource(R.drawable.play);
                 }
 
                 mPlayer = new MediaPlayer();
@@ -217,6 +227,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 } catch (IOException e) {
                     Log.d(TAG, e.toString());
                 }
+
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -236,7 +247,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 int start_second = (currentDuration % 60000) / 1000;
                 currentTime.setText(start_minute + ":" + start_second);
 
-                currentTime.postDelayed(this, 1000);
+                currentTime.postDelayed(this, 300);
             }else {
                 currentTime.removeCallbacks(this);
             }

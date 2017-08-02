@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static android.R.attr.id;
-
 /**
  * Created by sch on 2017-07-28.
  */
@@ -36,10 +34,6 @@ public class AccountService {
     private StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
     // TODO 서버에서 신고하는 URL 받아오기
-<<<<<<< HEAD
-=======
-    private String REPORT_URL = "asdf";
->>>>>>> 5d2a8dd6b9ac1195b6c54df182812af4a3cc531f
     private String REGIST_URL = "https://dmlwlsdk07.000webhostapp.com/joinin.php";
     private String LOGIN_URL = "https://dmlwlsdk07.000webhostapp.com/login_procs.php";
     private String REPORT_URL = "ASDF";
@@ -156,9 +150,5 @@ public class AccountService {
             Log.d(TAG, "ERROR OCCUR : " + e.toString());
         }
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 5d2a8dd6b9ac1195b6c54df182812af4a3cc531f
 }
 

@@ -3,7 +3,7 @@
     <item android:id="@+id/record_shape">
         <shape android:shape="oval">
             <solid
-                android:color="#d3d3d3" />
+                android:color="#ff7f00" />
         </shape>
     </item>
     <item
