@@ -3,19 +3,24 @@ package stack.birds.helpus.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.http.AndroidHttpClient;
 import android.os.StrictMode;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +33,8 @@ import java.util.List;
 public class AccountService {
     private StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
+    // TODO 서버에서 신고하는 URL 받아오기
+    private String REPORT_URL = "asdf";
     private String REGIST_URL = "https://dmlwlsdk07.000webhostapp.com/joinin.php";
     private String LOGIN_URL = "https://dmlwlsdk07.000webhostapp.com/login_procs.php";
     private int REGIST_FLAG = 1;
@@ -116,4 +123,31 @@ public class AccountService {
         loginEditor.clear();
         loginEditor.commit();
     }
+
+    // TODO MP3파일 올리는거 하기 
+    // MultipartEntityBuilder 로 서버에 file upload
+    private void uploadMP3Data(String id, Byte[] data) {
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        entity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        entity.addTextBody("PARAMS", "telo");
+
+        HttpClient client = AndroidHttpClient.newInstance("Android");
+
+        HttpPost post = new HttpPost(REPORT_URL);
+
+        try {
+            post.setEntity(entity.build());
+            HttpResponse httpRes;
+            httpRes = client.execute(post);
+            HttpEntity httpEntity = httpRes.getEntity();
+            if (httpEntity != null) {
+                String response = EntityUtils.toString(httpEntity);
+                Log.d(TAG, "reportData : " + response);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "ERROR OCCUR : " + e.toString());
+        }
+    }
+
 }
+
