@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -24,11 +25,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import stack.birds.helpus.Adapter.RecordAdapter;
 import stack.birds.helpus.Class.Record;
 import stack.birds.helpus.R;
+import stack.birds.helpus.Service.AccountService;
 
 /**
  * Created by dsm2016 on 2017-07-31.
@@ -36,9 +39,10 @@ import stack.birds.helpus.R;
 
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
-    private Button button, showListBtn;
-    private ImageView mp3_select;
+    private ImageView mp3_select, play_img, reset_img;
     private TextView currentTime, musicDuration;
+    private EditText title, body;
+    private Button reportBtn;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
 
@@ -74,9 +78,10 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecycler);
 
             bottomSheetBehavior.setPeekHeight((int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 48.f, getResources().getDisplayMetrics()));
+                    TypedValue.COMPLEX_UNIT_DIP, 72.f, getResources().getDisplayMetrics()));
             bottomSheetBehavior.setHideable(false);
 
+            // 녹음 아이콘 클릭시 밑에서 bottom sheet로 recyclerview가 올라옴
             mp3_select = (ImageView) view.findViewById(R.id.mp3_select);
             mp3_select.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,14 +94,20 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 }
             });
 
+            play_img = (ImageView) view.findViewById(R.id.play_img);
+            reset_img = (ImageView) view.findViewById(R.id.reset_img);
+            play_img.setOnClickListener(this);
+            reset_img.setOnClickListener(this);
+
+            title = (EditText) view.findViewById(R.id.report_title);
+            body = (EditText) view.findViewById(R.id.report_body);
+
             recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
 
             initRecyclerView();
 
             currentTime = (TextView) view.findViewById(R.id.current_time);
             musicDuration = (TextView) view.findViewById(R.id.mp3_duration);
-
-            button.setOnClickListener(this);
 
             mPlayer = new MediaPlayer();
             seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
@@ -108,29 +119,57 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     // 버튼 클릭시 음악재생
     @Override
     public void onClick(View v) {
-        // 만약 파일 읽는 권한이 없으면 권한을 얻고 재생
-        if (mPlayer.isPlaying()) {
-            // 재생중이면 실행될 작업 (정지)
-            mPlayer.stop();
-            try {
-                mPlayer.prepare();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        switch (v.getId()) {
 
-            mPlayer.seekTo(0);
-            button.setText("START");
-            seekBar.setProgress(0);
-        } else {
-            // 재생중이 아니면 실행될 작업 (재생)
-            mPlayer.start();
-            button.setText("STOP");
+            case R.id.play_img:
+                // 만약 파일 읽는 권한이 없으면 권한을 얻고 재생
+                if (mPlayer.isPlaying()) {
+                    // 재생중이면 실행될 작업 (정지)
+                    mPlayer.stop();
 
-            currentTime.post(UpdateTime);
-            Thread();
+                    play_img.setImageResource(R.drawable.play);
+
+                    try {
+                        mPlayer.prepare();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // 재생중이 아니면 실행될 작업 (재생)
+                    mPlayer.start();
+                    play_img.setImageResource(R.drawable.pause);
+
+                    currentTime.post(UpdateTime);
+                    Thread();
+                }
+                break;
+
+            // 노래가 처음으로 되돌아가고 정지 상태가 됨
+            case R.id.reset_img:
+                if (mPlayer.isPlaying()) {
+                    mPlayer.stop();
+                }
+                mPlayer.seekTo(0);
+                play_img.setImageResource(R.drawable.play);
+
+                break;
+
+            case R.id.report_btn:
+                HashMap<String, Object> report_params = new HashMap<String, Object>();
+                report_params.put("title", title.getText().toString());
+                report_params.put("body", body.getText().toString());
+                // mp3 데이터랑 gps 데이터 가져와서 파라미터에 넣기
+
+                // mp3 데이터 보내기 성공하면 return 1;
+                AccountService account = new AccountService(getContext());
+                int res = account.reportToServer(report_params);
+                if (res == 1) {
+                    // TODO 전송 완료 페이지로 넘어가기
+                }
         }
+
     }
 
     // 음악재생시 seekBar 가 채워짐
@@ -164,7 +203,6 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                     mPlayer.stop();
                 }
 
-                button.setText("START");
                 mPlayer = new MediaPlayer();
                 // 클릭된 view(item)을 가져와 원래 경로 + '/' + 파일이름 으로 mp3데이터를 인식시킴
                 int position = recyclerView.getChildLayoutPosition(v);
@@ -219,6 +257,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         return recList;
     }
 
+    //  노래가 재생시 initSeekBar가 생성되어 현재 노래 시간, 노래 길이가 textview에 설정됨
     private void initSeekBar() {
         seekBar.setMax(mPlayer.getDuration());
         int end_minute = mPlayer.getDuration() / 60000;

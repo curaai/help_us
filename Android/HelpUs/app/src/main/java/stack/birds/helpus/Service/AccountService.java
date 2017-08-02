@@ -8,15 +8,21 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +36,10 @@ public class AccountService {
 
     private String REGIST_URL = "https://dmlwlsdk07.000webhostapp.com/joinin.php";
     private String LOGIN_URL = "https://dmlwlsdk07.000webhostapp.com/login_procs.php";
-    private int REGIST_FLAG = 1;
+    private String REPORT_URL = "ASDF";
     private int LOGIN_FLAG = 0;
+    private int REGIST_FLAG = 1;
+    private int REPORT_FLAG = 2;
 
     private String TAG = "REQUEST";
     private String LOGIN_TAG = "AUTO_LOGIN";
@@ -41,7 +49,7 @@ public class AccountService {
 
     public AccountService(Context context) {
         this.context = context;
-         auto_login = context.getSharedPreferences("auto_login", Activity.MODE_PRIVATE);
+        auto_login = context.getSharedPreferences("auto_login", Activity.MODE_PRIVATE);
     }
 
     // 리퀘스트 성공시 1 실패시 0 오류시 -1
@@ -83,7 +91,7 @@ public class AccountService {
     }
 
     // 저장했던 값들을 불러와 로그인 리퀘스트를 날림
-    public int autoLogin(){
+    public int autoLogin() {
         String ID = auto_login.getString("id", null);
         String PW = auto_login.getString("pw", null);
 
@@ -116,4 +124,5 @@ public class AccountService {
         loginEditor.clear();
         loginEditor.commit();
     }
+    
 }
