@@ -4,11 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import stack.birds.helpus.Tab.ContactFragment;
-import stack.birds.helpus.Tab.ReceiveFragment;
-import stack.birds.helpus.Tab.ReportFragment;
-import stack.birds.helpus.Tab.ReportListFragment;
-import stack.birds.helpus.Tab.SettingFragment;
+import stack.birds.helpus.TabFragment.ContactFragment;
+import stack.birds.helpus.TabFragment.ReceiveFragment;
+import stack.birds.helpus.TabFragment.ReportFragment;
+import stack.birds.helpus.TabFragment.ReportListFragment;
+import stack.birds.helpus.TabFragment.SettingFragment;
 
 /**
  * Created by sch on 2017-07-31.

@@ -1,4 +1,4 @@
-package stack.birds.helpus.Tab;
+package stack.birds.helpus.TabFragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -160,11 +160,11 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 HashMap<String, Object> report_params = new HashMap<String, Object>();
                 report_params.put("title", title.getText().toString());
                 report_params.put("body", body.getText().toString());
-                // mp3 데이터랑 gps 데이터 가져와서 파라미터에 넣기
+                // mp3 데이터랑 gps 데이터 가져오기
 
                 // mp3 데이터 보내기 성공하면 return 1;
                 AccountService account = new AccountService(getContext());
-                int res = account.reportToServer(report_params);
+                int res = account.reportToServer(); // TODO 신고시 필요한 데이터들 넣어서 신고하기
                 if (res == 1) {
                     // TODO 전송 완료 페이지로 넘어가기
                 }

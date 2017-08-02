@@ -3,6 +3,7 @@ package stack.birds.helpus.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.http.AndroidHttpClient;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -21,8 +22,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +33,7 @@ import java.util.List;
 public class AccountService {
     private StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
+    // TODO 서버에서 신고하는 URL 받아오기
     private String REGIST_URL = "https://dmlwlsdk07.000webhostapp.com/joinin.php";
     private String LOGIN_URL = "https://dmlwlsdk07.000webhostapp.com/login_procs.php";
     private String REPORT_URL = "ASDF";
@@ -124,5 +124,31 @@ public class AccountService {
         loginEditor.clear();
         loginEditor.commit();
     }
-    
+
+    // TODO MP3파일 올리는거 하기 
+    // MultipartEntityBuilder 로 서버에 file upload
+    // HashMap 인자는 String 인자와 키 값들, 2번째 인자 Byte[] 는 서버로 보낼 mp3 데이터, 3번째는 GPS 데이터
+    public void reportToServer(HashMap<String, String> param, Byte[] data, String gpsData) {
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        entity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        entity.addTextBody("PARAMS", "telo");
+
+        HttpClient client = AndroidHttpClient.newInstance("Android");
+
+        HttpPost post = new HttpPost(REPORT_URL);
+
+        try {
+            post.setEntity(entity.build());
+            HttpResponse httpRes;
+            httpRes = client.execute(post);
+            HttpEntity httpEntity = httpRes.getEntity();
+            if (httpEntity != null) {
+                String response = EntityUtils.toString(httpEntity);
+                Log.d(TAG, "reportData : " + response);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "ERROR OCCUR : " + e.toString());
+        }
+    }
 }
+
