@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="stack.birds.helpus.AccountActivity.LoginActivity">
+    tools:context="stack.birds.helpus.AccountActivity.LoginActivity"
+    android:background="#f4f4f4"
+    >
 
    <LinearLayout
        android:layout_width="match_parent"

@@ -35,7 +35,7 @@
             android:layout_marginBottom="8dp"
             android:background="#ffffff"
             >
-
-        </LinearLayout>
+         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
