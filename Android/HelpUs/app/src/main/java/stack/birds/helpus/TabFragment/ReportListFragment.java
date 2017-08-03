@@ -32,7 +32,7 @@ public class ReportListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report_list, container, false);
 
-
+        initRecyclerView();
 
         return view;
     }
@@ -41,6 +41,9 @@ public class ReportListFragment extends Fragment {
         // report_db 에 있는 report 데이터들을 불러옴
         reportDBHelper = new ReportDBHelper(getContext());
         reportList = reportDBHelper.select();
+
+        // recyclerView 설정 
+        recyclerView = (RecyclerView) view.findViewById(R.id.report_recycler_view);
 
         // 해당 데이터를 recyclerView에 지정
         reportAdapter = new ReportAdapter(reportList);
