@@ -35,8 +35,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:multidex:1.0.0'
+<<<<<<< HEAD
     compile 'com.google.firebase:firebase-messaging:9.0.0'
     compile 'com.google.firebase:firebase-core:9.0.0'
+=======
+    compile 'com.google.firebase:firebase-messaging:10.2.1'
+    compile 'com.google.firebase:firebase-core:10.2.1'
+>>>>>>> 6d5af6b2888e50315ff0e02604524f2d7cb46d0f
     compile 'com.googlecode.android-query:android-query:0.25.9'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:26.0.0-alpha1'
