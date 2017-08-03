@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +45,7 @@ public class ContactFragment extends Fragment {
         userList.add(new User("필성", "zhsir123", "010-8976-5447"));
         userList.add(new User("재빈", "zhsir00", "010-1234-5678"));
         userList.add(new User("근철", "zhsir00", "010-9876-5432"));
+        userList.add(new User("null", "null", "010-0000-0000"));
 
         recyclerView = (RecyclerView) view.findViewById(R.id.contact_recycler);
         contactAdapter = new ContactAdapter(userList);
