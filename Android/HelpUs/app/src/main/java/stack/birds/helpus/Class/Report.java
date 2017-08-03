@@ -48,7 +48,7 @@ public class Report {
     }
 
     public String getReceivers() {
-        return TextUtils.join(", ", receivers);
+        return TextUtils.join(",", receivers);
     }
 
     public String getLastPlace() {

@@ -19,6 +19,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     private List<Report> reportList;
     Report report;
 
+    public ReportAdapter(List<Report> reportList) {
+        this.reportList = reportList;
+    }
+
     public class ReportViewHolder extends RecyclerView.ViewHolder {
         public TextView title, date, receivers;
 
@@ -29,10 +33,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
             date = (TextView) view.findViewById(R.id.report_row_date);
             receivers = (TextView) view.findViewById(R.id.report_row_receivers);
         }
-    }
-
-    public ReportAdapter(List<Report> reportList) {
-        this.reportList = reportList;
     }
 
     @Override
