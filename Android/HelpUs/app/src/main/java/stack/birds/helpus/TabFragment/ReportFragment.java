@@ -25,13 +25,15 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import stack.birds.helpus.Adapter.RecordAdapter;
 import stack.birds.helpus.Class.Record;
+import stack.birds.helpus.Class.Report;
 import stack.birds.helpus.R;
+import stack.birds.helpus.Service.AccountService;
 
 /**
  * Created by dsm2016 on 2017-07-31.
@@ -51,7 +53,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
 //    private String path = "/mnt/shared/Other";
     private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
-    private String parseColor = "#ff7f00";
+    private String currentMediaPath = null;
 
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
@@ -161,39 +163,25 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.report_btn:
-                HashMap<String, Object> report_params = new HashMap<String, Object>();
-                report_params.put("title", title.getText().toString());
-                report_params.put("body", body.getText().toString());
-                // mp3 데이터랑 gps 데이터 가져오기
+                File mp3 = new File(currentMediaPath);
 
-                // mp3 데이터 보내기 성공하면 return 1;
-//                AccountService account = new AccountService(getContext());
-//                int res = account.reportToServer(); // TODO 신고시 필요한 데이터들 넣어서 신고하기
-//                if (res == 1) {
-//                    // TODO 전송 완료 페이지로 넘어가기
-//                }
+                String reportTitle = title.getText().toString();
+                String reportContent = body.getText().toString();
+                String filePath = currentMediaPath;
+                String firstPlace = "대전";
+                String lastPlace = "아산";
+                Date reportDate = Calendar.getInstance().getTime();
+                Date accidentDate = new Date(mp3.lastModified());
+                int anonymous = 0;
+                String[] receivers = {"이재빈", "정필성", "서윤호", "정근철"};
+
+                Report report = new Report(reportTitle, reportContent, filePath, receivers,
+                        firstPlace, lastPlace, reportDate, accidentDate, anonymous);
+
+                AccountService account = new AccountService(getContext());
+                account.reportToServer(report, "1231254.123,43123123.123");
         }
 
-    }
-
-    // 음악재생시 seekBar 가 채워짐
-    public void Thread(){
-        Runnable task = new Runnable(){
-            public void run(){
-                // while문을 돌려서 음악이 실행중일때 게속 돌아가게 합니다
-                while(mPlayer.isPlaying()){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    // music.getCurrentPosition()은 현재 음악 재생 위치를 가져오는 구문 입니다
-                    seekBar.setProgress(mPlayer.getCurrentPosition());
-                }
-            }
-        };
-        Thread thread = new Thread(task);
-        thread.start();
     }
 
     private void initRecyclerView() {
@@ -218,7 +206,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 // 클릭된 view(item)을 가져와 원래 경로 + '/' + 파일이름 으로 mp3데이터를 인식시킴
                 int position = recyclerView.getChildLayoutPosition(v);
                 try {
-                    mPlayer.setDataSource(path + "/" + recList.get(position).getFileName());
+                    currentMediaPath = path + "/" + recList.get(position).getFileName();
+                    mPlayer.setDataSource(currentMediaPath);
                     mPlayer.prepare();
 
                     // 해당 mp3 데이터에 대한 seekbar 설정
@@ -235,7 +224,52 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recAdpater);
+    }
 
+    //  노래가 재생시 initSeekBar가 생성되어 현재 노래 시간, 노래 길이가 textview에 설정됨
+    private void initSeekBar() {
+        seekBar.setMax(mPlayer.getDuration());
+        int end_minute = mPlayer.getDuration() / 60000;
+        int end_second = (mPlayer.getDuration() % 60000) / 1000;
+        currentTime.setText("0:0");
+        musicDuration.setText(end_minute + ":" + end_second);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                if(fromUser)
+                    mPlayer.seekTo(progress);
+            }
+        });
+    }
+
+    // 음악재생시 seekBar 가 채워짐
+    public void Thread(){
+        Runnable task = new Runnable(){
+            public void run(){
+                // while문을 돌려서 음악이 실행중일때 게속 돌아가게 합니다
+                while(mPlayer.isPlaying()){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    // music.getCurrentPosition()은 현재 음악 재생 위치를 가져오는 구문 입니다
+                    seekBar.setProgress(mPlayer.getCurrentPosition());
+                }
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     // mp3파일이 재생중일 때 현재 시간이 계속 바뀜
@@ -267,31 +301,5 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             recList.add(rec);
         }
         return recList;
-    }
-
-    //  노래가 재생시 initSeekBar가 생성되어 현재 노래 시간, 노래 길이가 textview에 설정됨
-    private void initSeekBar() {
-        seekBar.setMax(mPlayer.getDuration());
-        int end_minute = mPlayer.getDuration() / 60000;
-        int end_second = (mPlayer.getDuration() % 60000) / 1000;
-        currentTime.setText("0:0");
-        musicDuration.setText(end_minute + ":" + end_second);
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                if(fromUser)
-                    mPlayer.seekTo(progress);
-            }
-        });
     }
 }

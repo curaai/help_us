@@ -67,7 +67,7 @@ public class Report {
     }
 
     public String getAccidentDate() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm")
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         return format.format(accidentDate);
     }
 }

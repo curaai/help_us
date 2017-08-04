@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -17,14 +16,18 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -136,33 +139,52 @@ public class AccountService {
 
         String ID = auto_login.getString("id", null);
 
+        File mp3 = new File(report.getFilePath());
+        Date last = new Date(mp3.lastModified());
+        Date currentDate = Calendar.getInstance().getTime();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/mm/dd HH:mm");
+
+        String lastModified = format.format(last);
+        String reportDate = format.format(currentDate);
 
         MultipartEntityBuilder entity = MultipartEntityBuilder.create();
         entity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
         try {
-            entity.addPart("id", new StringBody(ID));
-            entity.addPart("title", new StringBody(report.getTitle()));
-            entity.addPart("content", new StringBody(report.getContent()));
-            entity.addPart("receivers", new StringBody(report.getReceivers()));
-            entity.addPart("gps", new StringBody(report.getTitle()));
+            entity.addPart("id",            new StringBody(ID));
+            entity.addPart("title",         new StringBody(report.getTitle()));
+            entity.addPart("content",       new StringBody(report.getContent()));
+            entity.addPart("receivers",     new StringBody(report.getReceivers()));
+            entity.addPart("reportDate",    new StringBody(report.getReportDate()));
+            entity.addPart("accidentDate",  new StringBody(report.getAccidentDate()));
+            entity.addPart("anonymous",     new StringBody(Integer.toString(report.getANONYMOUS())));
+            entity.addPart("gps",           new StringBody(gpsData));
+            entity.addPart("file",          new FileBody(mp3));
         } catch (UnsupportedEncodingException e) {
-
+            e.printStackTrace();
         }
 
         HttpClient client = AndroidHttpClient.newInstance("Android");
-
         HttpPost post = new HttpPost(REPORT_URL);
 
         try {
-            post.setEntity(entity.build());
-            HttpResponse httpRes;
-            httpRes = client.execute(post);
-            HttpEntity httpEntity = httpRes.getEntity();
-            if (httpEntity != null) {
-                String response = EntityUtils.toString(httpEntity);
-                Log.d(TAG, "reportData : " + response);
-            }
+
+            HttpResponse response = client.execute(post);
+
+            // 받은 respones로 부터 result 헤더의 값을 String 형태로 가져옴
+            int result = response.getStatusLine().getStatusCode();
+            Log.d(TAG, "received from server : " + result);
+
+//            구글링 했던 코드들
+//            post.setEntity(entity.build());
+//            HttpResponse httpRes;
+//            httpRes = client.execute(post);
+//            HttpEntity httpEntity = httpRes.getEntity();
+//            if (httpEntity != null) {
+//                String response = EntityUtils.toString(httpEntity);
+//                Log.d(TAG, "reportData : " + response);
+//            }
         } catch (Exception e) {
             Log.d(TAG, "ERROR OCCUR : " + e.toString());
         }
