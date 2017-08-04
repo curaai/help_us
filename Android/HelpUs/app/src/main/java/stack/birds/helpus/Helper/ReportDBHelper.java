@@ -43,7 +43,7 @@ public class ReportDBHelper extends SQLiteOpenHelper {
     }
 
     // insert to report_table
-    public void insert(String title, String content, String filePath, String[] receivers,
+    public void insert(String title, String content, String filePath, String[] receivers, String accidentDate,
                        String firstPlace, String lastPlace, String reportDate, int isAnonymous) {
 
         String str_receiver = TextUtils.join(",", receivers);
@@ -57,6 +57,7 @@ public class ReportDBHelper extends SQLiteOpenHelper {
         values.put(ContractHelpUsDB.COL_REPORT_FIRST_PLACE, firstPlace);
         values.put(ContractHelpUsDB.COL_REPORT_LAST_PLACE, lastPlace);
         values.put(ContractHelpUsDB.COL_REPORT_DATE, reportDate);
+        values.put(ContractHelpUsDB.COL_REPORT_ACCIDENT_DATE, accidentDate);
         values.put(ContractHelpUsDB.COL_REPORT_ANONYMOUS, isAnonymous);
 
         write_db.insert(ContractHelpUsDB.TBL_REPORT, null, values);
@@ -76,7 +77,7 @@ public class ReportDBHelper extends SQLiteOpenHelper {
         List<Report> reportList = new ArrayList<Report>();
         String title, content, filePath, firstPlace, lastPlace;
         String[] receivers;
-        Date reportDate = null;
+        Date reportDate = null, accidentDate = null;
         int anonymous;
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -94,11 +95,13 @@ public class ReportDBHelper extends SQLiteOpenHelper {
 
             try {
                 reportDate = format.parse(cursor.getString(cursor.getColumnIndex(ContractHelpUsDB.COL_REPORT_DATE)));
+                accidentDate = format.parse(cursor.getString(cursor.getColumnIndex(ContractHelpUsDB.COL_REPORT_ACCIDENT_DATE)));
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            Report report = new Report(title, content, filePath, receivers, firstPlace, lastPlace, reportDate, anonymous);
+            Report report = new Report(title, content, filePath, receivers, firstPlace, lastPlace, reportDate, accidentDate, anonymous);
             reportList.add(report);
         }
 

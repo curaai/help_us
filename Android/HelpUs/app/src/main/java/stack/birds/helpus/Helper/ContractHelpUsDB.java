@@ -22,6 +22,7 @@ public class ContractHelpUsDB {
     public static final String COL_REPORT_FIRST_PLACE = "FIRST_PLACE";
     public static final String COL_REPORT_LAST_PLACE = "LAST_PLACE";
     public static final String COL_REPORT_DATE = "DATE";
+    public static final String COL_REPORT_ACCIDENT_DATE = "ACCIDENT_DATE";
     public static final String COL_REPORT_RECEIVCERS = "RECEIVERS";
     public static final String COL_REPORT_ANONYMOUS = "ANONYMOUS";
 
@@ -43,6 +44,7 @@ public class ContractHelpUsDB {
                 COL_REPORT_FIRST_PLACE +    "TEXT NOT NULL"     +  ", " +
                 COL_REPORT_LAST_PLACE +     "TEXT NOT NULL"     +  ", " +
                 COL_REPORT_DATE +           "TEXT NOT NULL"     +  ", " +
+                COL_REPORT_ACCIDENT_DATE +  "TEXT NOT NULL"     +  ", " +
                 COL_REPORT_RECEIVCERS +     "TEXT NOT NULL"     +  ", " +
                 COL_REPORT_ANONYMOUS +      "INTEGER NOT NULL " +
             ")" ;

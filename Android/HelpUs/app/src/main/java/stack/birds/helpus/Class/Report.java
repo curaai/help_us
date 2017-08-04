@@ -17,10 +17,11 @@ public class Report {
     private String lastPlace;
     private String[] receivers;
     private Date reportDate;
+    private Date accidentDate;
     private int ANONYMOUS;
 
     public Report(String title, String content, String filePath, String[] receivers,
-                  String firstPlace, String lastPlace, Date reportDate, int ANONYMOUS) {
+                  String firstPlace, String lastPlace, Date reportDate, Date accidentDate, int ANONYMOUS) {
         this.title = title;
         this.content = content;
         this.filePath = filePath;
@@ -28,6 +29,7 @@ public class Report {
         this.firstPlace = firstPlace;
         this.lastPlace = lastPlace;
         this.reportDate = reportDate;
+        this.accidentDate = accidentDate;
         this.ANONYMOUS = ANONYMOUS;
     }
 
@@ -62,5 +64,10 @@ public class Report {
 
     public int getANONYMOUS() {
         return ANONYMOUS;
+    }
+
+    public String getAccidentDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm")
+        return format.format(accidentDate);
     }
 }

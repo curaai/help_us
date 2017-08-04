@@ -17,14 +17,18 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import stack.birds.helpus.Class.Report;
 
 /**
  * Created by sch on 2017-07-28.
@@ -119,7 +123,7 @@ public class AccountService {
         }
     }
 
-    public void loginDataRemove() {
+    public void logout() {
         SharedPreferences.Editor loginEditor = auto_login.edit();
         loginEditor.clear();
         loginEditor.commit();
@@ -128,10 +132,23 @@ public class AccountService {
     // TODO MP3파일 올리는거 하기 
     // MultipartEntityBuilder 로 서버에 file upload
     // HashMap 인자는 String 인자와 키 값들, 2번째 인자 Byte[] 는 서버로 보낼 mp3 데이터, 3번째는 GPS 데이터
-    public void reportToServer(HashMap<String, String> param, Byte[] data, String gpsData) {
+    public void reportToServer(Report report, String gpsData) {
+
+        String ID = auto_login.getString("id", null);
+
+
         MultipartEntityBuilder entity = MultipartEntityBuilder.create();
         entity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-        entity.addTextBody("PARAMS", "telo");
+
+        try {
+            entity.addPart("id", new StringBody(ID));
+            entity.addPart("title", new StringBody(report.getTitle()));
+            entity.addPart("content", new StringBody(report.getContent()));
+            entity.addPart("receivers", new StringBody(report.getReceivers()));
+            entity.addPart("gps", new StringBody(report.getTitle()));
+        } catch (UnsupportedEncodingException e) {
+
+        }
 
         HttpClient client = AndroidHttpClient.newInstance("Android");
 

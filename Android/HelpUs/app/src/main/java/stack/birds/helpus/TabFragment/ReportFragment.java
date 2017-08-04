@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -47,8 +48,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     private RecordAdapter recAdpater;
 
     private List<Record> recList;
-    private String path = "/mnt/shared/Other";
-//    private String path = Environment.getExternalStorageDirectory() + "/Music";
+//    private String path = "/mnt/shared/Other";
+    private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
     private String parseColor = "#ff7f00";
 

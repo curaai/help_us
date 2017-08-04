@@ -24,6 +24,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         public TextView name, number;
         public Button button;
 
+        // 만약 마지막 item일 경우 버튼 추가
         public ContactViewHolder(View view, int viewType) {
             super(view);
 
@@ -67,6 +68,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         }
     }
 
+    // 마지막 아이템의 버튼은 클릭시 item들이 추가로 생김
     @Override
     public int getItemViewType(int position) {
         return (position == userList.size() - 1)? 1 : 0;
