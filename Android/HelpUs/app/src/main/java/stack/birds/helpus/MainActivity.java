@@ -1,5 +1,7 @@
 package stack.birds.helpus;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -13,12 +15,42 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     MainPagerAdapter pagerAdapter;
 
+    static final int PERMISSION_REQUEST_CODE = 1;
+    public static String[] PERMISSIONS = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+
     final int[] icons = new int[] {R.drawable.home, R.drawable.send, R.drawable.list, R.drawable.icon, R.drawable.setting};
+
+    private boolean hasPermissions(String[] permissions) {
+        int res = 0;
+
+        // String Array의 퍼미션 체크
+        for(String perms : permissions) {
+            res = checkCallingOrSelfPermission(perms);
+            // permission이 허가 안된경우
+            if( !(res == PackageManager.PERMISSION_GRANTED)) {
+                return false;
+            }
+        }
+
+        // permission이 허가 됫을 떄
+        return true;
+    }
+
+    private void requestNecessaryPermissions(String[] permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 사용자가 퍼미션이 없을 경우 허락을 받소 시작함
+        if (!hasPermissions(PERMISSIONS)) {
+            requestNecessaryPermissions(PERMISSIONS);
+        }
 
         //  테스팅 시에는 잠시 취소
 //        final AccountService account = new AccountService(getApplicationContext());
