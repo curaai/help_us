@@ -3,7 +3,6 @@ package stack.birds.helpus.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.http.AndroidHttpClient;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -14,20 +13,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,7 +33,7 @@ public class AccountService {
     // TODO 서버에서 신고하는 URL 받아오기
     private String REGIST_URL = "https://dmlwlsdk07.000webhostapp.com/joinin.php";
     private String LOGIN_URL = "https://dmlwlsdk07.000webhostapp.com/login_procs.php";
-    private String REPORT_URL = "ASDF";
+    private String REPORT_URL = "https://dmlwlsdk07.000webhostapp.com/file.php";
     private int LOGIN_FLAG = 0;
     private int REGIST_FLAG = 1;
     private int REPORT_FLAG = 2;
@@ -136,58 +126,9 @@ public class AccountService {
     // MultipartEntityBuilder 로 서버에 file upload
     // HashMap 인자는 String 인자와 키 값들, 2번째 인자 Byte[] 는 서버로 보낼 mp3 데이터, 3번째는 GPS 데이터
     public void reportToServer(Report report, String gpsData) {
-
         String ID = auto_login.getString("id", null);
-
-        File mp3 = new File(report.getFilePath());
-        Date last = new Date(mp3.lastModified());
-        Date currentDate = Calendar.getInstance().getTime();
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/mm/dd HH:mm");
-
-        String lastModified = format.format(last);
-        String reportDate = format.format(currentDate);
-
-        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
-        entity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-
-        try {
-            entity.addPart("id",            new StringBody(ID));
-            entity.addPart("title",         new StringBody(report.getTitle()));
-            entity.addPart("content",       new StringBody(report.getContent()));
-            entity.addPart("receivers",     new StringBody(report.getReceivers()));
-            entity.addPart("reportDate",    new StringBody(report.getReportDate()));
-            entity.addPart("accidentDate",  new StringBody(report.getAccidentDate()));
-            entity.addPart("anonymous",     new StringBody(Integer.toString(report.getANONYMOUS())));
-            entity.addPart("gps",           new StringBody(gpsData));
-            entity.addPart("file",          new FileBody(mp3));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        HttpClient client = AndroidHttpClient.newInstance("Android");
-        HttpPost post = new HttpPost(REPORT_URL);
-
-        try {
-
-            HttpResponse response = client.execute(post);
-
-            // 받은 respones로 부터 result 헤더의 값을 String 형태로 가져옴
-            int result = response.getStatusLine().getStatusCode();
-            Log.d(TAG, "received from server : " + result);
-
-//            구글링 했던 코드들
-//            post.setEntity(entity.build());
-//            HttpResponse httpRes;
-//            httpRes = client.execute(post);
-//            HttpEntity httpEntity = httpRes.getEntity();
-//            if (httpEntity != null) {
-//                String response = EntityUtils.toString(httpEntity);
-//                Log.d(TAG, "reportData : " + response);
-//            }
-        } catch (Exception e) {
-            Log.d(TAG, "ERROR OCCUR : " + e.toString());
-        }
+        HttpPostTask task = new HttpPostTask();
+        task.execute(report, gpsData, ID);
     }
 }
 

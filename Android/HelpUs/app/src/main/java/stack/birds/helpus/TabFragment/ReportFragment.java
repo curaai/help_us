@@ -1,14 +1,8 @@
 package stack.birds.helpus.TabFragment;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -42,25 +37,20 @@ import stack.birds.helpus.Service.AccountService;
 public class ReportFragment extends Fragment implements View.OnClickListener{
     private View view;
     private ImageView mp3_select, play_img, reset_img;
-    private LayerDrawable layer;
-    private GradientDrawable shape;
+    private Button reportBtn;
     private TextView currentTime, musicDuration;
     private EditText title, body;
     private RecyclerView recyclerView;
     private RecordAdapter recAdpater;
 
     private List<Record> recList;
-//    private String path = "/mnt/shared/Other";
-    private String path = Environment.getExternalStorageDirectory() + "/Music";
+    private String path = "/mnt/shared/Other";
+//    private String path = Environment.getExternalStorageDirectory() + "/Music";
     private String TAG = "Report";
     private String currentMediaPath = null;
 
     private MediaPlayer mPlayer;
     private SeekBar seekBar;
-    public static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -68,56 +58,47 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report, container, false);
 
-        // ReportFragment 를 실행하기전에 mp3데이터에 대한 권한을 미리 획득한 후에 프래그먼트를 시작한다.
-        int permission = ActivityCompat.checkSelfPermission(
-                getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    getActivity(),
-                    PERMISSIONS_STORAGE,
-                    1
-            );
-        } else {
-            View bottomSheetRecycler = view.findViewById(R.id.bottom_sheet1);
-            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecycler);
+        View bottomSheetRecycler = view.findViewById(R.id.bottom_sheet1);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecycler);
 
-            bottomSheetBehavior.setPeekHeight(0);
-            bottomSheetBehavior.setHideable(false);
+        bottomSheetBehavior.setPeekHeight(0);
+        bottomSheetBehavior.setHideable(false);
 
 
-            // 녹음 아이콘 클릭시 밑에서 bottom sheet로 recyclerview가 올라옴
-            mp3_select = (ImageView) view.findViewById(R.id.mp3_select);
+        // 녹음 아이콘 클릭시 밑에서 bottom sheet로 recyclerview가 올라옴
+        mp3_select = (ImageView) view.findViewById(R.id.mp3_select);
 
 
-            mp3_select.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    } else {
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    }
+        mp3_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
-            });
+            }
+        });
 
-            play_img = (ImageView) view.findViewById(R.id.play_img);
-            reset_img = (ImageView) view.findViewById(R.id.reset_img);
-            play_img.setOnClickListener(this);
-            reset_img.setOnClickListener(this);
+        play_img = (ImageView) view.findViewById(R.id.play_img);
+        reset_img = (ImageView) view.findViewById(R.id.reset_img);
+        reportBtn = (Button) view.findViewById(R.id.report_btn);
+        play_img.setOnClickListener(this);
+        reset_img.setOnClickListener(this);
+        reportBtn.setOnClickListener(this);
 
-            title = (EditText) view.findViewById(R.id.report_title);
-            body = (EditText) view.findViewById(R.id.report_body);
+        title = (EditText) view.findViewById(R.id.report_title);
+        body = (EditText) view.findViewById(R.id.report_body);
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.record_list);
 
-            initRecyclerView();
+        initRecyclerView();
 
-            currentTime = (TextView) view.findViewById(R.id.current_time);
-            musicDuration = (TextView) view.findViewById(R.id.mp3_duration);
+        currentTime = (TextView) view.findViewById(R.id.current_time);
+        musicDuration = (TextView) view.findViewById(R.id.mp3_duration);
 
-            mPlayer = new MediaPlayer();
-            seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
-        }
+        mPlayer = new MediaPlayer();
+        seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
 
         return view;
     }
@@ -163,6 +144,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.report_btn:
+                Log.d("button", "Button Clicked");
                 File mp3 = new File(currentMediaPath);
 
                 String reportTitle = title.getText().toString();
@@ -180,6 +162,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
 
                 AccountService account = new AccountService(getContext());
                 account.reportToServer(report, "1231254.123,43123123.123");
+
+                Log.d("parameter", "파라미터는 일단 완성");
         }
 
     }
