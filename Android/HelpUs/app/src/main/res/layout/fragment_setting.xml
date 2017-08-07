@@ -305,6 +305,7 @@
             android:background="#ffffff">
 
             <ImageView
+                android:id="@+id/logout_img"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
@@ -335,5 +336,9 @@
         </LinearLayout>
 
     </LinearLayout>
+<<<<<<< HEAD
 
 </LinearLayout>
+=======
+</LinearLayout>
+>>>>>>> 7bf38d3202705074e11fa4b93bd2f3c2d85c8200
