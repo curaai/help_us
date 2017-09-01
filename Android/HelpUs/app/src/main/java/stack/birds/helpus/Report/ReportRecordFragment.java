@@ -55,7 +55,7 @@ public class ReportRecordFragment extends Fragment {
 
         recordList = getMp3Files();
 
-        adapter = new RecordAdapter(recordList);
+        adapter = new RecordAdapter(new ArrayList<Record>());
         recyclerView = (RecyclerView) view.findViewById(R.id.report_record_recycler);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
