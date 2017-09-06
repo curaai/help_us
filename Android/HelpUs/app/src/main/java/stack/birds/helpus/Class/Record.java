@@ -9,12 +9,14 @@ import java.util.Date;
 
 public class Record {
     private String fileName;
+    private String filePath;
     private Date modifyDate;
 
     public Record() {}
 
-    public Record(String fileName, Date modifyDate) {
+    public Record(String fileName, String filePath, Date modifyDate) {
         this.fileName = fileName;
+        this.filePath = filePath;
         this.modifyDate = modifyDate;
     }
 
@@ -33,5 +35,13 @@ public class Record {
 
     public void setmodifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }
