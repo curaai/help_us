@@ -81,10 +81,6 @@ public class ReportPictureFragment extends Fragment{
 
         return result;
     }
-
-    public static String getBucketId(String path) {
-        return String.valueOf(path.toLowerCase().hashCode());
-    }
 }
 
 class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHolder>{

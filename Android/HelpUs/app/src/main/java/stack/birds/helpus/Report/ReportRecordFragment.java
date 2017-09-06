@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +37,7 @@ import stack.birds.helpus.R;
 public class ReportRecordFragment extends Fragment {
     View view;
 
-    String path = "/mnt/shared/Other";
+    String path = Environment.getExternalStorageDirectory() + "/Music";
     List<Record> recordList;
 
     RecyclerView recyclerView;
@@ -115,7 +116,7 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
     @Override
     public RecViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.record_list_row, parent, false);
+                inflate(R.layout.report_tab_record_item, parent, false);
         return new RecViewHolder(itemView);
     }
 
