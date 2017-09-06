@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 메인 액티비티의 탭
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("HOME"));
+        tabLayout.addTab(tabLayout.newTab().setText("홈"));
         tabLayout.addTab(tabLayout.newTab().setText("신고하기"));
         tabLayout.addTab(tabLayout.newTab().setText("신고내역"));
         tabLayout.addTab(tabLayout.newTab().setText("신고접수"));
