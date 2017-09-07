@@ -3,14 +3,13 @@ package stack.birds.helpus.Report;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.ThumbnailUtils;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +35,6 @@ public class ReportVideoFragment extends Fragment {
     RecyclerView recycler;
     List<String> videoList;
 
-    String path = Environment.getExternalStorageDirectory() + "/Download/Carol/ carol.mkv";
-
     @SuppressLint("ValidFragment")
     public ReportVideoFragment(Context context) {
         this.context = context;
@@ -47,17 +44,18 @@ public class ReportVideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.report_tab_video, container, false);
 
-//        recycler = (RecyclerView) view.findViewById(R.id.report_video_list);
-//
-//        videoList = getAllMedia();
-//        Log.d("video", videoList.size() + "");
-//        Log.d("video_path", videoList.get(0));
-//        VideoAdapter adapter = new VideoAdapter(videoList, context);
-//        recycler.setAdapter(adapter);
+        recycler = (RecyclerView) view.findViewById(R.id.report_video_list);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+        recycler.setLayoutManager(mLayoutManager);
 
-        VideoView video = (VideoView) view.findViewById(R.id.report_video);
-        video.setVideoPath(path);
-        video.setMediaController(new MediaController(context));
+        videoList = getAllMedia();
+        Log.d("video", videoList.size() + "");
+        for(int i=0; i<videoList.size() ; i++) {
+            Log.d("video_path", videoList.get(i));
+        }
+
+        VideoAdapter adapter = new VideoAdapter(videoList, context);
+        recycler.setAdapter(adapter);
 
         return view;
     }
@@ -106,28 +104,28 @@ class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
     @Override
     public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-        inflate(R.layout.report_tab_video_item, parent, false);
+                inflate(R.layout.report_tab_video_item, parent, false);
 
         selectedVideo = new ArrayList<Boolean>(Arrays.asList(new Boolean[videoList.size()]));
         Collections.fill(selectedVideo, Boolean.FALSE);
+        mediaController = new MediaController(parent.getContext());
 
         return new VideoViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(VideoViewHolder holder, int position) {
+    public void onBindViewHolder(final VideoViewHolder holder, int position) {
         String path = videoList.get(position);
-
-        mediaController = new MediaController(context);
 
         holder.video.setVideoPath(path);
         holder.video.setMediaController(mediaController);
-        holder.video.requestFocus();
-
-        Bitmap thumnail = ThumbnailUtils.createVideoThumbnail(path,
-                MediaStore.Images.Thumbnails.MINI_KIND);
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(thumnail);
-        holder.video.setBackgroundDrawable(bitmapDrawable);
+        holder.video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                holder.video.start();
+                holder.video.requestFocus();
+            }
+        });
     }
 
     @Override
