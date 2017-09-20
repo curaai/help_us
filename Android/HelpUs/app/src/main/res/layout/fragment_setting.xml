@@ -2,51 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:background="#ffffff"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp"
-        >
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="common" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp"
-            android:background="#ffffff">
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/bluetooth"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/bluetooth" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="bluetooth" />
+                    android:text="bluetooth"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/bluetooth_connect_device"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="show connect device"/>
+                    android:text="show connect device"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -55,89 +56,85 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginBottom="8dp"
-            android:background="#ffffff"
-            >
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
-                android:layout_gravity="center"
-                android:src="@drawable/location"
-                />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="gps" />
-
-                    <TextView
-                        android:id="@+id/gps_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10dp"
-                        android:text="show location"/>
-
-                </LinearLayout>
-
-                <Switch
-                    android:id="@+id/switch_gps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="16dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp"
             android:background="#ffffff">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/realname"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/location" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="anonymity" />
+                    android:text="gps"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/gps_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="show location"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch_gps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/realname" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="anonymity"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/real_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="choose real name or anonymity"/>
+                    android:text="choose real name or anonymity"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -146,42 +143,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginBottom="8dp"
             android:background="#ffffff">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/personadd"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/personadd" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="address synchronization" />
+                    android:text="address synchronization"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/battery_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="add address"/>
+                    android:text="add address"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -190,41 +186,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginBottom="8dp"
             android:background="#ffffff">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/battery"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/battery" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="address synchronization" />
+                    android:text="address synchronization"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="add address"/>
+                    android:text="add address"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -233,35 +228,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginBottom="8dp"
             android:background="#ffffff">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/info"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/info" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="info" />
+                    android:text="info"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/info_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="0.0.0 :D lastest version"/>
+                    android:text="0.0.0 :D lastest version"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -271,34 +265,33 @@
             android:id="@+id/box_feedback"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="8dp"
             android:background="#ffffff">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/feedback"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/feedback" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="feedback, error_report" />
+                    android:text="feedback, error_report"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="plz send feedback!"/>
+                    android:text="plz send feedback!"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -308,40 +301,35 @@
             android:id="@+id/box_logout"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginBottom="8dp"
             android:background="#ffffff">
 
             <ImageView
                 android:id="@+id/logout_img"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/power"/>
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/power" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:text="logout" />
+                    android:text="logout"
+                    android:textSize="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:text="good bye :D"/>
-
+                    android:text="good bye :D"
+                    android:textSize="10dp" />
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>
