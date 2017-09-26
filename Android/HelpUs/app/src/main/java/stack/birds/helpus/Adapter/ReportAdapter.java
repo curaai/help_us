@@ -16,22 +16,13 @@ import stack.birds.helpus.R;
  */
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder>{
-    private List<Report> reportList;
-    Report report;
+    public ReportAdapter() {
 
-    public ReportAdapter(List<Report> reportList) {
-        this.reportList = reportList;
     }
 
     public class ReportViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, date, receivers;
-
         public ReportViewHolder(View view) {
             super(view);
-
-            title = (TextView) view.findViewById(R.id.report_row_title);
-            date = (TextView) view.findViewById(R.id.report_row_date);
-            receivers = (TextView) view.findViewById(R.id.report_row_receivers);
         }
     }
 
@@ -44,14 +35,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
     @Override
     public void onBindViewHolder(ReportAdapter.ReportViewHolder holder, int position) {
-        report = reportList.get(position);
-        holder.title.setText(report.getTitle());
-        holder.date.setText(report.getReportDate());
-        holder.receivers.setText(report.getReceivers());
-    }
 
     @Override
     public int getItemCount() {
-        return reportList.size();
+
     }
 }

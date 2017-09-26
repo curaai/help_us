@@ -1,4 +1,4 @@
-package stack.birds.helpus.Report;
+package stack.birds.helpus.ReportActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

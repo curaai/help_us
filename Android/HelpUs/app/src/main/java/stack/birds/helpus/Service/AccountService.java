@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import stack.birds.helpus.Item.Report;
-
 /**
  * Created by sch on 2017-07-28.
  */
@@ -120,15 +118,6 @@ public class AccountService {
         SharedPreferences.Editor loginEditor = auto_login.edit();
         loginEditor.clear();
         loginEditor.commit();
-    }
-
-    // TODO MP3파일 올리는거 하기 
-    // MultipartEntityBuilder 로 서버에 file upload
-    // HashMap 인자는 String 인자와 키 값들, 2번째 인자 Byte[] 는 서버로 보낼 mp3 데이터, 3번째는 GPS 데이터
-    public void reportToServer(Report report, String gpsData) {
-        String ID = auto_login.getString("id", null);
-        HttpPostTask task = new HttpPostTask();
-        task.execute(report, gpsData, ID);
     }
 }
 

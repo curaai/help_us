@@ -1,4 +1,4 @@
-package stack.birds.helpus.Report;
+package stack.birds.helpus.ReportActivity;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
