@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import stack.birds.helpus.Class.Report;
+import stack.birds.helpus.Item.Report;
 
 /**
  * Created by sch on 2017-07-28.

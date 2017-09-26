@@ -1,4 +1,4 @@
-package stack.birds.helpus.Class;
+package stack.birds.helpus.Item;
 
 /**
  * Created by sch on 2017-07-31.

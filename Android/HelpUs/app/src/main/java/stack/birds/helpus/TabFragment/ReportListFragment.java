@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import stack.birds.helpus.Adapter.ReportAdapter;
-import stack.birds.helpus.Class.Report;
+import stack.birds.helpus.Item.Report;
 import stack.birds.helpus.Helper.ReportDBHelper;
 import stack.birds.helpus.R;
 

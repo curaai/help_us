@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import stack.birds.helpus.Class.Report;
+import stack.birds.helpus.Item.Report;
 import stack.birds.helpus.R;
 
 /**
