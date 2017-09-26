@@ -1,4 +1,4 @@
-package stack.birds.helpus.ReportReceiveActivity;
+package stack.birds.helpus.ReceiveActivity;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import stack.birds.helpus.R;
  * Created by dsm2016 on 2017-09-27.
  */
 
-public class ReportReceiveFragment extends Fragment {
+public class ReceiveFragment extends Fragment {
     View view;
 
     @Override
