@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import stack.birds.helpus.Class.User;
+import stack.birds.helpus.Item.User;
 import stack.birds.helpus.R;
 
 /**

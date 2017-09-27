@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import stack.birds.helpus.Class.Report;
+import stack.birds.helpus.Item.Report;
 
 /**
  * Created by dsm2016 on 2017-08-02.

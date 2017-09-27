@@ -14,6 +14,9 @@ import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import stack.birds.helpus.MainActivity;
 import stack.birds.helpus.R;
 
@@ -57,5 +60,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         notificationManager.notify(0, mBuilder.build());
 
         mBuilder.setContentIntent(contentIntent);
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        for (Map.Entry<String, String> entry : remoteMessage.getData().entrySet()) {
+            map.put(entry.getKey(), entry.getValue());
+        }
     }
 }

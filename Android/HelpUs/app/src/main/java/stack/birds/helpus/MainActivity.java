@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }
-
         // permission이 허가 됫을 떄
         return true;
     }

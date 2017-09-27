@@ -1,4 +1,4 @@
-package stack.birds.helpus.Report;
+package stack.birds.helpus.ReportActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import stack.birds.helpus.Class.Record;
+import io.realm.Realm;
+import stack.birds.helpus.Item.Record;
 import stack.birds.helpus.R;
 
 /**
@@ -35,14 +36,15 @@ import stack.birds.helpus.R;
  */
 
 public class ReportRecordFragment extends Fragment {
-    View view;
+    private View view;
+    private Context context;
+    private Realm mRealm;
 
     String path = Environment.getExternalStorageDirectory() + "/Music";
     List<Record> recordList;
 
     RecyclerView recyclerView;
     RecordAdapter adapter;
-    Context context;
 
     @SuppressLint("ValidFragment")
     public ReportRecordFragment(Context context) {
@@ -53,6 +55,7 @@ public class ReportRecordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.report_tab_record, container, false);
+        mRealm = Realm.getInstance(context);
 
         recordList = getMp3Files();
 
@@ -75,18 +78,30 @@ public class ReportRecordFragment extends Fragment {
         for(File inFile : files) {
             String fileName = inFile.getName();
             String filePath = inFile.getPath();
-            Date lastModified = new Date(inFile.lastModified());
+            Date fileDate = new Date(inFile.lastModified());
 
-            Record record = new Record(fileName, filePath, lastModified);
+            Record record = mRealm.createObject(Record.class);
+            record.setFileName(fileName);
+            record.setFilePath(filePath);
+            record.setFileDate(fileDate);
             recordList.add(record);
         }
 
         return recordList;
     }
+
+    public List<Record> getReportData() {
+        List<Record> selected = new ArrayList<Record>();
+        for(int i = 0; i < adapter.getSelectedList().size(); i++) {
+            selected.add(recordList.get(adapter.getSelectedList().get(i)));
+        }
+        return selected;
+    }
 }
 
 class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> implements View.OnClickListener {
     private List<Record> recList;
+    private List<Integer> selectedList;
     Record rec;
 
     class RecViewHolder extends RecyclerView.ViewHolder {
@@ -121,7 +136,7 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
     }
 
     @Override
-    public void onBindViewHolder(final RecViewHolder holder, int position) {
+    public void onBindViewHolder(final RecViewHolder holder, final int position) {
         rec = recList.get(position);
 
         // get mp3 file's length
@@ -132,7 +147,7 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
         int second = (duration % 60000) / 1000;
 
         holder.fileName.setText(rec.getFileName());
-        holder.fileDate.setText(rec.getmodifyDate());
+        holder.fileDate.setText(rec.getStringFileDate());
         holder.fileLength.setText(minute + ":" + second);
         holder.seekbar.setMax(duration);
 
@@ -185,6 +200,13 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
 
             }
         });
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedList.add(position);
+            }
+        });
     }
 
     @Override
@@ -199,6 +221,10 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
 
                 break;
         }
+    }
+
+    public List<Integer> getSelectedList() {
+        return selectedList;
     }
 }
 

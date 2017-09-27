@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import stack.birds.helpus.Class.Report;
+import stack.birds.helpus.Item.Report;
 
 /**
  * Created by sch on 2017-08-04.

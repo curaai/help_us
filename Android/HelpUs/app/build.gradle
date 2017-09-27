@@ -46,6 +46,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
     }
+    compile 'io.realm:realm-android:0.87.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,15 +1,22 @@
-package stack.birds.helpus.Report;
+package stack.birds.helpus.ReportActivity;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import org.apache.http.NameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import stack.birds.helpus.Item.Record;
 import stack.birds.helpus.R;
 
 /**
@@ -21,16 +28,31 @@ public class ReportFragment extends Fragment {
 
     private BottomSheetBehavior bottomSheetBehavior;
     private TabLayout tabLayout;
+    private String[] tabNames = {"녹음", "사진"};
     private ViewPager viewPager;
     private ReportPagerAdapter pagerAdapter;
+
+    private EditText title, content;
+    private Button reportButton;
+
+    int currentPage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report, container, false);
 
+        // bottom sheet and tab Layout initialize
         initLayout();
 
-        Log.d("asdf", getActivity().toString());
+        title = (EditText) view.findViewById(R.id.report_title);
+        content = (EditText) view.findViewById(R.id.report_content);
+        reportButton = (Button) view.findViewById(R.id.report_button);
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return view;
     }
@@ -44,9 +66,9 @@ public class ReportFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.report_tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("녹음"));
         tabLayout.addTab(tabLayout.newTab().setText("사진"));
-        tabLayout.addTab(tabLayout.newTab().setText("동영상"));
 
         // tab Layout 설정
+        currentPage = 0;
         viewPager = (ViewPager) view.findViewById(R.id.report_pager);
         pagerAdapter = new ReportPagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount(),
                 getContext());
@@ -69,5 +91,25 @@ public class ReportFragment extends Fragment {
 
             }
         });
+    }
+
+    private static String makeFragmentName(int viewPagerId, int index) {
+        return "android:switcher:" + viewPagerId + ":" + index;
+    }
+
+    public void report() {
+        List<Record> recordPath;
+        List<String> picturePath;
+
+        ReportPictureFragment reportFragment = (ReportPictureFragment) getActivity().getSupportFragmentManager().
+                findFragmentByTag(makeFragmentName(R.id.report_pager, 0));
+        picturePath = reportFragment.getReportData();
+
+        ReportRecordFragment recordFragment = (ReportRecordFragment) getActivity().getSupportFragmentManager().
+                findFragmentByTag(makeFragmentName(R.id.report_pager, 1);
+        recordPath = recordFragment.getReportData();
+
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
     }
 }

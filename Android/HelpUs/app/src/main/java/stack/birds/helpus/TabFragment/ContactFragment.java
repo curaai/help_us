@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stack.birds.helpus.Adapter.ContactAdapter;
-import stack.birds.helpus.Class.User;
+import stack.birds.helpus.Item.User;
 import stack.birds.helpus.Helper.UserDBHelper;
 import stack.birds.helpus.R;
 

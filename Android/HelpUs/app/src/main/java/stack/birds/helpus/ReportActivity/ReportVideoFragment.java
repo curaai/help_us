@@ -1,4 +1,4 @@
-package stack.birds.helpus.Report;
+package stack.birds.helpus.ReportActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,8 +17,6 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -82,7 +80,7 @@ public class ReportVideoFragment extends Fragment {
 
 class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
     private List<String> videoList;
-    private List<Boolean> selectedVideo;
+    private List<Integer> selectedVideoList;
     private MediaController mediaController;
     private Context context;
 
@@ -106,8 +104,7 @@ class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
         View itemView = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.report_tab_video_item, parent, false);
 
-        selectedVideo = new ArrayList<Boolean>(Arrays.asList(new Boolean[videoList.size()]));
-        Collections.fill(selectedVideo, Boolean.FALSE);
+        selectedVideoList = new ArrayList<Integer>();
         mediaController = new MediaController(parent.getContext());
 
         return new VideoViewHolder(itemView);
