@@ -1,6 +1,5 @@
 package stack.birds.helpus.ReceiveActivity;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,7 @@ import stack.birds.helpus.R;
  * Created by dsm2016 on 2017-09-27.
  */
 
-public class ReceiveFragment extends Fragment {
+public class ReceiveFragment extends android.support.v4.app.Fragment {
     View view;
     Realm mRealm;
 

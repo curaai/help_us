@@ -10,17 +10,17 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <service
-        android:name=".FirebaseInstanceIDService"
-        android:exported="false">
+        android:name=".MyFirebaseMessagingService">
         <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
         </intent-filter>
     </service>
+    <!-- [END firebase_service] -->
+    <!-- [START firebase_iid_service] -->
     <service
-        android:name=".FirebaseMessagingService"
-        android:exported="false">
+        android:name=".MyFirebaseInstanceIDService">
         <intent-filter>
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
         </intent-filter>
     </service>
 
@@ -41,7 +41,7 @@
         <activity android:name=".AccountActivity.LoginActivity" />
         <activity android:name=".LandingActivity.LandingActivity" />
         <activity android:name=".AccountActivity.SignupActivity" />
-        <activity android:name=".AccountActivity.ForgetAccountActivity"></activity>
+        <activity android:name=".AccountActivity.ForgetAccountActivity" />
     </application>
 
 </manifest>

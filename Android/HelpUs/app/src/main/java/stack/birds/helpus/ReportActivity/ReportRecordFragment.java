@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class ReportRecordFragment extends Fragment {
 
         recordList = getMp3Files();
 
-        adapter = new RecordAdapter(new ArrayList<Record>());
+        adapter = new RecordAdapter(new ArrayList<Record>(), context);
         recyclerView = (RecyclerView) view.findViewById(R.id.report_record_recycler);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
@@ -103,6 +104,7 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
     private List<Record> recList;
     private List<Integer> selectedList;
     Record rec;
+    private Context context;
 
     class RecViewHolder extends RecyclerView.ViewHolder {
         public ImageView icon;
@@ -124,8 +126,9 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
         }
     }
 
-    public RecordAdapter(List<Record> recList) {
+    public RecordAdapter(List<Record> recList, Context context) {
         this.recList = recList;
+        this.context = context;
     }
 
     @Override
@@ -147,7 +150,6 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
         int second = (duration % 60000) / 1000;
 
         holder.fileName.setText(rec.getFileName());
-        holder.fileDate.setText(rec.getStringFileDate());
         holder.fileLength.setText(minute + ":" + second);
         holder.seekbar.setMax(duration);
 
@@ -204,7 +206,11 @@ class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecViewHolder> im
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedList.add(position);
+                if (selectedList.size() < 3){
+                    selectedList.add(position);
+                } else {
+                    Toast.makeText(context, "이미지를 3개이상 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

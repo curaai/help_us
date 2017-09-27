@@ -17,8 +17,8 @@ import stack.birds.helpus.R;
  */
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
-    private List<User> userList;
-    private User user;
+    private List<User> UserList;
+    private User User;
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         public TextView name, number;
@@ -38,8 +38,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         }
     }
 
-    public ContactAdapter(List<User> userList) {
-        this.userList = userList;
+    public ContactAdapter(List<User> UserList) {
+        this.UserList = UserList;
     }
 
     @Override
@@ -61,22 +61,22 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
-        if(position != userList.size() - 1) {
-            user = userList.get(position);
-            holder.name.setText(user.getName());
-            holder.number.setText(user.getPhoneNum());
+        if(position != UserList.size() - 1) {
+            User = UserList.get(position);
+            holder.name.setText(User.getName());
+            holder.number.setText(User.getPhoneNum());
         }
     }
 
     // 마지막 아이템의 버튼은 클릭시 item들이 추가로 생김
     @Override
     public int getItemViewType(int position) {
-        return (position == userList.size() - 1)? 1 : 0;
+        return (position == UserList.size() - 1)? 1 : 0;
     }
 
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return UserList.size();
     }
 }

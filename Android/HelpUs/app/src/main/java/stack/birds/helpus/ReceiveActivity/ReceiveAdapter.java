@@ -49,12 +49,8 @@ public class ReceiveAdapter extends RecyclerView.Adapter<ReceiveAdapter.ReceiveV
     @Override
     public void onBindViewHolder(ReceiveViewHolder holder, int position) {
         Receive receive = receiveList.get(position);
-        Date date= receive.getAccidentDate();
-        SimpleDateFormat trans = new SimpleDateFormat("yyyy MM dd");
-        String accidentDate = trans.format(date);
 
         holder.title.setText(receive.getTitle());
-        holder.date.setText(accidentDate);
         holder.reporter.setText(receive.getReporter());
     }
 
