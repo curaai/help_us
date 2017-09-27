@@ -8,22 +8,6 @@
     tools:context="stack.birds.helpus.AccountActivity.LoginActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FF9632">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:text="forget password :(" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,24 +29,6 @@
             android:inputType="textEmailAddress"
             android:textSize="14dp"
             android:hint="input email" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_gravity="bottom"
-        android:background="#FF9632">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:text="send" />
 
     </LinearLayout>
 
