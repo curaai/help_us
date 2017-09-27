@@ -7,7 +7,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import stack.birds.helpus.Adapter.MainPagerAdapter;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (hasPermissions(PERMISSIONS)) {
 
+            // Realm DB Setting
+            defaultDBSetting();
 
             // 메인 액티비티의 탭
             tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -102,6 +105,17 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(intent);
 //            finish();
 //        }
+
+
+    }
+
+    public void defaultDBSetting() {
+        RealmConfiguration conf = new RealmConfiguration.Builder(this)
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(conf);
 
 
     }

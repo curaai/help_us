@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,6 +25,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
@@ -54,16 +56,16 @@ public class ReportFragment extends Fragment {
     private String URI = "asdf";
 
     private EditText title, content;
-    private Button reportButton;
+    private Button reportButton, contactButton;
 
     List<Record> recordList;
     List<String> pictureList;
     List<User> userList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report, container, false);
-        mRealm = Realm.getInstance(getActivity());
+        mRealm = Realm.getDefaultInstance();
 
         // bottom sheet and tab Layout initialize
         initLayout();
@@ -74,7 +76,18 @@ public class ReportFragment extends Fragment {
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(userList.size() == 0) {
+                    Toast.makeText(getActivity(), "신고를 받을 대상을 지정해주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    report();
+                }
+            }
+        });
+        contactButton = (Button) view.findViewById(R.id.contact_button);
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userList = selectReceiver();
             }
         });
 
@@ -131,9 +144,8 @@ public class ReportFragment extends Fragment {
                 findFragmentByTag(makeFragmentName(R.id.report_pager, 1));
         recordList = recordFragment.getReportData();
 
-        userList = selectReceiver();
 
-
+        uploadFiles();
     }
 
     public List<User> getUserList() {
@@ -144,9 +156,6 @@ public class ReportFragment extends Fragment {
     public ArrayList<User> selectReceiver() {
         ArrayList<String> itemList = new ArrayList<String>();
         userList = getUserList();
-        for(User user: userList) {
-            itemList.add(user.getName());
-        }
 
         CharSequence[] items = itemList.toArray(new CharSequence[itemList.size()]);
         // arraylist to keep the selected items
@@ -182,14 +191,26 @@ public class ReportFragment extends Fragment {
         return selectUser;
     }
 
-
     private void uploadFiles() {
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
-        // id setting
         SharedPreferences login = getContext().getSharedPreferences("auto_login", Activity.MODE_PRIVATE);
         String ID = login.getString("id", null);
-        builder.addPart("id", ID);
+        try {
+            // id
+            builder.addPart("id", new StringBody(ID));
+
+            //title
+            String reportTitle = title.getText().toString();
+            builder.addPart("title", new StringBody(reportTitle));
+
+            //content
+            String reportContent = content.getText().toString();
+            builder.addPart("content", new StringBody(reportContent));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
 
         // upload picture files
         for(int i = 0; i < pictureList.size(); i++) {

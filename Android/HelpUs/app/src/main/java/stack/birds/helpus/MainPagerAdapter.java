@@ -1,4 +1,4 @@
-package stack.birds.helpus.Adapter;
+package stack.birds.helpus;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import stack.birds.helpus.ReceiveActivity.ReceiveFragment;
 import stack.birds.helpus.ReportActivity.ReportFragment;
-import stack.birds.helpus.TabFragment.ContactFragment;
+import stack.birds.helpus.ContactActivity.ContactFragment;
 import stack.birds.helpus.TabFragment.ReportListFragment;
 import stack.birds.helpus.TabFragment.SettingFragment;
 

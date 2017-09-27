@@ -56,7 +56,7 @@ public class ReportRecordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.report_tab_record, container, false);
-        mRealm = Realm.getInstance(context);
+        mRealm = Realm.getDefaultInstance();
 
         recordList = getMp3Files();
 

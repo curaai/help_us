@@ -30,8 +30,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initWidgets() {
-        logoutImage = (ImageView) view.findViewById(R.id.logout_img);
-        logoutImage.setOnClickListener(this);
+//        logoutImage = (ImageView) view.findViewById(R.id.logout_img);
+//        logoutImage.setOnClickListener(this);
 
     }
 
@@ -40,9 +40,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener{
 
         switch (v.getId()) {
 
-            case R.id.logout_img:
-                logout();
-                break;
+//            case R.id.logout_img:
+//                logout();
+//                break;
 
 
         }
