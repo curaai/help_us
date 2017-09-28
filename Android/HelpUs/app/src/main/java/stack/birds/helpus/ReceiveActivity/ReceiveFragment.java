@@ -30,7 +30,7 @@ public class ReceiveFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_report_list, container, false);
-        mRealm = Realm.getInstance(getActivity());
+        mRealm = Realm.getDefaultInstance();
 
         initRecyclerLayout();
 

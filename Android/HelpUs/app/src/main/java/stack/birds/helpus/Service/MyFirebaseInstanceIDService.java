@@ -1,6 +1,8 @@
 package stack.birds.helpus.Service;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -22,8 +24,11 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public MyFirebaseInstanceIDService(Context context) {
         final String token = FirebaseInstanceId.getInstance().getToken();
 
+        SharedPreferences auto_login = context.getSharedPreferences("auto_login", Activity.MODE_PRIVATE);
+        String id = auto_login.getString("id", null);
         HashMap<String, String> param = new HashMap<String, String>();
         param.put("Token", token);
+        param.put("id", id);
 
         AQuery aq = new AQuery(context);
         aq.ajax(HOST_URL, param, String.class, new AjaxCallback<String>() {

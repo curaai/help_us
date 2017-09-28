@@ -10,72 +10,110 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/expandableButton1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="84dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="#E86622"/>
 
-            <EditText
-                android:id="@+id/report_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="제목"/>
-
-            <EditText
-                android:id="@+id/report_content"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:hint="내용"/>
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/expandableButton1"
+            android:padding="16dp"
+            app:ael_duration="400"
+            app:ael_expanded="false"
+            app:ael_interpolator="accelerate"
+            app:ael_orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginTop="84dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/contact_button"
-                    android:layout_width="170dp"
+                <EditText
+                    android:id="@+id/report_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:background="#E86622" />
+                    android:hint="제목"/>
 
-                <Button
-                    android:id="@+id/report_button"
-                    android:layout_width="170dp"
+                <EditText
+                    android:id="@+id/report_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:hint="내용"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:background="#E86622" />
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/contact_button"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="#E86622" />
+
+                    <Button
+                        android:id="@+id/report_button"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="#E86622" />
+
+                </LinearLayout>
 
             </LinearLayout>
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/report_bottom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/report_tab_layout"
+        <Button
+            android:id="@+id/expandableButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:backgroundTint="#E86622"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:layout_marginTop="16dp"
+            android:background="#E86622"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/report_pager"
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/expandableButton1"
+            android:padding="16dp"
+            app:ael_duration="400"
+            app:ael_expanded="false"
+            app:ael_interpolator="accelerate"
+            app:ael_orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/report_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/report_tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:backgroundTint="#E86622"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/report_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
     </LinearLayout>
+
+
 </android.support.design.widget.CoordinatorLayout>

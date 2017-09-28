@@ -28,9 +28,6 @@ public class ReportPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 ReportPictureFragment tabFragment2 = new ReportPictureFragment(context);
                 return tabFragment2;
-            case 2:
-                ReportVideoFragment tabFragment3 = new ReportVideoFragment(context);
-                return tabFragment3;
             default:
                 return null;
         }

@@ -30,7 +30,7 @@ public class ReportListFragment extends Fragment {
     private void initRecyclerView () {
 //        // report_db 에 있는 report 데이터들을 불러옴
 //        reportDBHelper = new ReportDBHelper(getContext());
-//        reportList = reportDBHelper.select();
+//        reportList =   reportDBHelper.select();
 //
 //        // recyclerView 설정
 //        recyclerView = (RecyclerView) view.findViewById(R.id.report_recycler_view);

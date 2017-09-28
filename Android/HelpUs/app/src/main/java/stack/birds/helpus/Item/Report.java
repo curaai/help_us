@@ -11,9 +11,13 @@ public class Report extends RealmObject {
     @PrimaryKey
     private String title;
     private String content;
-    private String fileList;
     private String receivers;
-    private boolean ANONYMOUS;
+    private String music1;
+    private String music2;
+    private String music3;
+    private String image1;
+    private String image2;
+    private String image3;
 
     public String getTitle() {
         return title;
@@ -31,14 +35,6 @@ public class Report extends RealmObject {
         this.content = content;
     }
 
-    public String getFileList() {
-        return fileList;
-    }
-
-    public void setFileList(String fileList) {
-        this.fileList = fileList;
-    }
-
     public String getReceivers() {
         return receivers;
     }
@@ -47,11 +43,51 @@ public class Report extends RealmObject {
         this.receivers = receivers;
     }
 
-    public boolean isANONYMOUS() {
-        return ANONYMOUS;
+    public String getMusic1() {
+        return music1;
     }
 
-    public void setANONYMOUS(boolean ANONYMOUS) {
-        this.ANONYMOUS = ANONYMOUS;
+    public void setMusic1(String music1) {
+        this.music1 = music1;
+    }
+
+    public String getMusic2() {
+        return music2;
+    }
+
+    public void setMusic2(String music2) {
+        this.music2 = music2;
+    }
+
+    public String getMusic3() {
+        return music3;
+    }
+
+    public void setMusic3(String music3) {
+        this.music3 = music3;
+    }
+
+    public String getImage1() {
+        return image1;
+    }
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
     }
 }

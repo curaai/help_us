@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -33,6 +34,7 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import stack.birds.helpus.Item.Report;
 import stack.birds.helpus.Item.User;
 import stack.birds.helpus.R;
 
@@ -45,6 +47,8 @@ public class ReportFragment extends Fragment {
     Realm mRealm;
     private String TAG = "REPORT";
 
+    ExpandableRelativeLayout expandableLayout1, expandableLayout2;
+
     private BottomSheetBehavior bottomSheetBehavior;
     private TabLayout tabLayout;
     private String[] tabNames = {"녹음", "사진", "비디오"};
@@ -53,11 +57,12 @@ public class ReportFragment extends Fragment {
     private String URI = "https://dmlwlsdk07.000webhostapp.com/push_notification.php";
 
     private EditText title, content;
-    private Button reportButton, contactButton;
+    private Button reportButton, contactButton, expandableButton1, expandableButton2;
 
     List<String> recordList;
     List<String> pictureList;
     static List<User> userList;
+    String users;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -91,15 +96,36 @@ public class ReportFragment extends Fragment {
             }
         });
 
+        expandableLayout1 = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayout1);
+        expandableButton1 = (Button) view.findViewById(R.id.expandableButton1);
+        expandableButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(expandableLayout2.isExpanded()) {
+                    expandableLayout2.collapse();
+                }
+                expandableLayout1.toggle(); // toggle expand and collapse
+            }
+        });
+
+        expandableLayout2 = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayout2);
+        expandableButton2 = (Button) view.findViewById(R.id.expandableButton2);
+        expandableButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(expandableLayout1.isExpanded()) {
+                    expandableLayout1.collapse();
+                }
+                expandableLayout2.toggle(); // toggle expand and collapse
+
+            }
+        });
+
+        
         return view;
     }
 
     void initLayout() {
-        // bottom sheet init
-        View bottomLayout = view.findViewById(R.id.report_bottom_sheet);
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomLayout);
-        bottomSheetBehavior.setHideable(true); // bottom sheet이 숨겨진 채로 시작
-
         tabLayout = (TabLayout) view.findViewById(R.id.report_tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("녹음"));
         tabLayout.addTab(tabLayout.newTab().setText("사진"));
@@ -193,8 +219,8 @@ public class ReportFragment extends Fragment {
     }
 
     private void uploadFiles() {
-        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-        final MediaType MEDIA_TYPE_MP3 = MediaType.parse("audio/mpeg");
+        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
+        final MediaType MEDIA_TYPE_MP3 = MediaType.parse("audio/*");
 
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
@@ -202,43 +228,36 @@ public class ReportFragment extends Fragment {
         String ID = login.getString("id", null);
 
         //title
-        String reportTitle = title.getText().toString();
+        final String reportTitle = title.getText().toString();
 
         //content
-        String reportContent = content.getText().toString();
+        final String reportContent = content.getText().toString();
 
         // receivers
-        String users = "";
+        users = "";
         for(User user: userList) {
             users += user.getId() + ",";
         }
 
         MultipartBody.Builder body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("id", ID);
-//                .addFormDataPart("title", reportTitle)
-//                .addFormDataPart("content", reportContent)
-//                .addFormDataPart("receivers", users);
+                .addFormDataPart("id", ID)
+                .addFormDataPart("title", reportTitle)
+                .addFormDataPart("content", reportContent)
+                .addFormDataPart("receivers", users);
 
         if (pictureList != null) {
             for(int i = 0; i < pictureList.size(); i++) {
                 File f = new File(pictureList.get(i));
-                body.addFormDataPart("image" + i + 1, pictureList.get(i), RequestBody.create(MEDIA_TYPE_PNG, f));
-                Log.d(TAG, "path: " + pictureList.get(i));
+                body.addFormDataPart("image" + (i + 1), pictureList.get(i), RequestBody.create(MEDIA_TYPE_PNG, f));
             }
         }
         if (recordList != null) {
             for(int i = 0; i < recordList.size(); i++) {
                 File f = new File(recordList.get(i));
-                body.addFormDataPart("music" + i + 1, recordList.get(i), RequestBody.create(MEDIA_TYPE_MP3, f));
+                body.addFormDataPart("music" + (i + 1), recordList.get(i), RequestBody.create(MEDIA_TYPE_MP3, f));
             }
         }
-//        Log.d(TAG, reportTitle);
-//        Log.d(TAG, reportContent);
-//        Log.d(TAG, users);
-//        Log.d(TAG, recordList.get(0));
-
-        Log.d(TAG, "uploadFiles: " + body.toString());
 
         Request request = new Request.Builder()
                 .url(URI)
@@ -257,6 +276,36 @@ public class ReportFragment extends Fragment {
             @Override
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 Log.d(TAG, "onResponse: " + response.toString());
+                if (response.toString().contains("200")) {
+                    // if success to upload save reported data
+                    Realm mRealm = Realm.getDefaultInstance();
+                    mRealm.beginTransaction();
+                    
+                    Report report = mRealm.createObject(Report.class);
+                    report.setTitle(reportTitle);
+                    report.setContent(reportContent);
+                    report.setReceivers(users);
+                    if(!recordList.get(0).isEmpty()) {
+                        report.setMusic1(recordList.get(0));    
+                    }
+                    if(!recordList.get(1).isEmpty()) {
+                        report.setMusic2(recordList.get(1));
+                    }
+                    if(!recordList.get(2).isEmpty()) {
+                        report.setMusic3(recordList.get(2));
+                    }
+                    if(!pictureList.get(0).isEmpty()) {
+                        report.setImage1(pictureList.get(0));
+                    }
+                    if(!pictureList.get(1).isEmpty()) {
+                        report.setImage2(pictureList.get(1));
+                    }
+                    if(!pictureList.get(2).isEmpty()) {
+                        report.setImage3(pictureList.get(2));
+                    }
+
+                    mRealm.commitTransaction();
+                }
             }
 
         });
