@@ -2,15 +2,11 @@ package stack.birds.helpus.Item;
 
 import java.util.Date;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by dsm2016 on 2017-08-01.
  */
 
-public class Record extends RealmObject {
-    @PrimaryKey
+public class Record {
     private String fileName;
     private String filePath;
     private Date fileDate;

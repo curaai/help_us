@@ -1,5 +1,6 @@
 package stack.birds.helpus;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import stack.birds.helpus.LandingActivity.LandingActivity;
+import stack.birds.helpus.Service.AccountService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  테스팅 시에는 잠시 취소
-//        final AccountService account = new AccountService(getApplicationContext());
-//        int result = account.autoLogin();
-//        // 만약 자동로그인이 안되어있을 시에 LandingActivity 로 넘어감
-//        if(result != 1) {
-//            Intent intent = new Intent(this, LandingActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
+        final AccountService account = new AccountService(getApplicationContext());
+        int result = account.autoLogin();
+        // 만약 자동로그인이 안되어있을 시에 LandingActivity 로 넘어감
+        if(result != 1) {
+            Intent intent = new Intent(this, LandingActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
     }

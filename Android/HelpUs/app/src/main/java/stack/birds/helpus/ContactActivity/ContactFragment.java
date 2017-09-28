@@ -3,7 +3,7 @@ package stack.birds.helpus.ContactActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +41,7 @@ public class ContactFragment extends Fragment {
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) view.findViewById(R.id.contact_recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         contactAdapter = new ContactAdapter(getUserList(), getActivity());
         recyclerView.setAdapter(contactAdapter);
@@ -52,8 +52,6 @@ public class ContactFragment extends Fragment {
         RealmResults<User> result = mRealm.where(User.class).findAll();
         List<User> list = mRealm.copyFromRealm(result);
         Log.d(TAG, "user list size is " + list.size());
-        // last item is contact add button
-        list.add(null);
         return list;
     }
 }

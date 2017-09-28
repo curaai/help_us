@@ -3,14 +3,13 @@ package stack.birds.helpus.ReportActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.ParseException;
-import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,25 +17,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import stack.birds.helpus.Item.Record;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import stack.birds.helpus.Item.User;
 import stack.birds.helpus.R;
 
@@ -47,20 +43,21 @@ import stack.birds.helpus.R;
 public class ReportFragment extends Fragment {
     View view;
     Realm mRealm;
+    private String TAG = "REPORT";
 
     private BottomSheetBehavior bottomSheetBehavior;
     private TabLayout tabLayout;
     private String[] tabNames = {"녹음", "사진", "비디오"};
     private ViewPager viewPager;
     private ReportPagerAdapter pagerAdapter;
-    private String URI = "asdf";
+    private String URI = "https://dmlwlsdk07.000webhostapp.com/push_notification.php";
 
     private EditText title, content;
     private Button reportButton, contactButton;
 
-    List<Record> recordList;
+    List<String> recordList;
     List<String> pictureList;
-    List<User> userList;
+    static List<User> userList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +66,7 @@ public class ReportFragment extends Fragment {
 
         // bottom sheet and tab Layout initialize
         initLayout();
+        userList = new ArrayList<User>();
 
         title = (EditText) view.findViewById(R.id.report_title);
         content = (EditText) view.findViewById(R.id.report_content);
@@ -88,6 +86,8 @@ public class ReportFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 userList = selectReceiver();
+                Log.d(TAG, FirebaseInstanceId.getInstance().getToken());
+
             }
         });
 
@@ -136,27 +136,24 @@ public class ReportFragment extends Fragment {
     public void report() {
 
 
-        ReportPictureFragment reportFragment = (ReportPictureFragment) getActivity().getSupportFragmentManager().
-                findFragmentByTag(makeFragmentName(R.id.report_pager, 0));
-        pictureList = reportFragment.getReportData();
-
-        ReportRecordFragment recordFragment = (ReportRecordFragment) getActivity().getSupportFragmentManager().
-                findFragmentByTag(makeFragmentName(R.id.report_pager, 1));
-        recordList = recordFragment.getReportData();
-
+        ReportSingle single = ReportSingle.getInstance();
+        pictureList = single.getPicture();
+        recordList = single.getRecord();
 
         uploadFiles();
     }
 
     public List<User> getUserList() {
         RealmResults<User> res = mRealm.where(User.class).findAll();
-        return res.subList(0, res.size());
+        return mRealm.copyFromRealm(res);
     }
 
     public ArrayList<User> selectReceiver() {
         ArrayList<String> itemList = new ArrayList<String>();
-        userList = getUserList();
-
+        final List<User> users = getUserList();
+        for(User user: users) {
+            itemList.add(user.getName());
+        }
         CharSequence[] items = itemList.toArray(new CharSequence[itemList.size()]);
         // arraylist to keep the selected items
         final ArrayList<User> selectUser = new ArrayList<User>();
@@ -166,13 +163,17 @@ public class ReportFragment extends Fragment {
                 .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                        if (isChecked) {
-                            // If the user checked the item, add it to the selected items
-                            selectUser.add(userList.get(indexSelected));
-                        } else if (selectUser.contains(userList.get(indexSelected))) {
-                            // Else, if the item is already in the array, remove it
-                            selectUser.remove(indexSelected);
+                        if(selectUser.size() < 4) {
+                            if (isChecked) {
+                                // If the user checked the item, add it to the selected items
+                                User user = users.get(indexSelected);
+                                selectUser.add(user);
+                            } else if (selectUser.contains(users.get(indexSelected))) {
+                                // Else, if the item is already in the array, remove it
+                                selectUser.remove(indexSelected);
+                            }
                         }
+
                     }
                 }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -192,35 +193,19 @@ public class ReportFragment extends Fragment {
     }
 
     private void uploadFiles() {
+        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+        final MediaType MEDIA_TYPE_MP3 = MediaType.parse("audio/mpeg");
+
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
         SharedPreferences login = getContext().getSharedPreferences("auto_login", Activity.MODE_PRIVATE);
         String ID = login.getString("id", null);
-        try {
-            // id
-            builder.addPart("id", new StringBody(ID));
 
-            //title
-            String reportTitle = title.getText().toString();
-            builder.addPart("title", new StringBody(reportTitle));
+        //title
+        String reportTitle = title.getText().toString();
 
-            //content
-            String reportContent = content.getText().toString();
-            builder.addPart("content", new StringBody(reportContent));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
-        // upload picture files
-        for(int i = 0; i < pictureList.size(); i++) {
-            builder.addPart("picture" + i, new FileBody(new File(pictureList.get(i))));
-        }
-
-        // upload mp3 files
-        for(int i = 0; i < recordList.size(); i++) {
-            builder.addPart("music" + i, new FileBody(new File(recordList.get(i).getFilePath())));
-        }
+        //content
+        String reportContent = content.getText().toString();
 
         // receivers
         String users = "";
@@ -228,21 +213,53 @@ public class ReportFragment extends Fragment {
             users += user.getId() + ",";
         }
 
-        HttpClient client = AndroidHttpClient.newInstance("Android");
-        HttpPost post = new HttpPost(URI);
-        String response = "";
-        try {
-            post.setEntity(builder.build()); //builder.build() 메쏘드를 사용하여 httpEntity 객체를 얻는다.
-            HttpResponse httpRes;
-            httpRes = client.execute(post);
-            HttpEntity httpEntity = httpRes.getEntity();
-            if (httpEntity != null) {
-                response = EntityUtils.toString(httpEntity);
+        MultipartBody.Builder body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("id", ID);
+//                .addFormDataPart("title", reportTitle)
+//                .addFormDataPart("content", reportContent)
+//                .addFormDataPart("receivers", users);
+
+        if (pictureList != null) {
+            for(int i = 0; i < pictureList.size(); i++) {
+                File f = new File(pictureList.get(i));
+                body.addFormDataPart("image" + i + 1, pictureList.get(i), RequestBody.create(MEDIA_TYPE_PNG, f));
+                Log.d(TAG, "path: " + pictureList.get(i));
             }
-        } catch (UnsupportedEncodingException e) {
-        } catch (ClientProtocolException e1) {
-        } catch (IOException e1) {
-        } catch (ParseException e) {
         }
+        if (recordList != null) {
+            for(int i = 0; i < recordList.size(); i++) {
+                File f = new File(recordList.get(i));
+                body.addFormDataPart("music" + i + 1, recordList.get(i), RequestBody.create(MEDIA_TYPE_MP3, f));
+            }
+        }
+//        Log.d(TAG, reportTitle);
+//        Log.d(TAG, reportContent);
+//        Log.d(TAG, users);
+//        Log.d(TAG, recordList.get(0));
+
+        Log.d(TAG, "uploadFiles: " + body.toString());
+
+        Request request = new Request.Builder()
+                .url(URI)
+                .post(body.build())
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        okhttp3.Call call = client.newCall(request);
+        call.enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                Log.d(TAG, "onResponse: " + response.toString());
+            }
+
+        });
+
     }
 }

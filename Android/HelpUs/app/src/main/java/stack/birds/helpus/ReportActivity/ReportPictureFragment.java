@@ -82,18 +82,11 @@ public class ReportPictureFragment extends Fragment{
         return result;
     }
 
-    public List<String> getReportData() {
-        List<Integer> clicked = adapter.getIsClicked();
-        List<String> clickedImage = new ArrayList<String>();
-        for (int i = 0; i < clicked.size(); i++){
-            clickedImage.add(imageList.get(clicked.get(i)));
-        }
-        return clickedImage;
-    }
+
 }
 
 class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHolder>{
-    private List<Integer> isClicked;
+    private ArrayList<String> isClicked;
     private List<String> picturesPath;
     private Context context;
 
@@ -117,7 +110,7 @@ class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHold
     public PictureAdapter.PictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.report_tab_picture_item, parent, false);
-        isClicked = new ArrayList<Integer>();
+        isClicked = new ArrayList<String>();
 
         return new PictureViewHolder(itemView);
     }
@@ -131,11 +124,13 @@ class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHold
             @Override
             public void onClick(View v) {
                 if(isClicked.contains(position)) {
-                    isClicked.remove(Integer.valueOf(position));
+                    isClicked.remove(position);
                 } else if(isClicked.size() < 3) {
-                    isClicked.add(position);
+                    isClicked.add(picturesPath.get(position));
                     holder.image.setBackgroundColor(Color.CYAN);
                     holder.image.setColorFilter(Color.rgb(0, 0, 0));
+                    getReportData();
+                } else {
                     Toast.makeText(context, "이미지를 3개이상 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -147,7 +142,9 @@ class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHold
         return picturesPath.size();
     }
 
-    public List<Integer> getIsClicked() {
-        return isClicked;
+
+    public void getReportData() {
+        ReportSingle single = ReportSingle.getInstance();
+        single.setPicture(isClicked);
     }
 }
