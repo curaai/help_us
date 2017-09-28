@@ -8,14 +8,6 @@
     android:gravity="center"
     tools:context="stack.birds.helpus.MainActivity">
 
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-
     <android.support.design.widget.TabLayout
         style="@style/MyTabLayout"
         android:id="@+id/tab_layout"
@@ -28,5 +20,14 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:tabBackground="@drawable/tab_selector"
         app:tabIndicatorHeight="0dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+
 
 </LinearLayout>
