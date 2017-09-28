@@ -1,7 +1,5 @@
 package stack.birds.helpus.Item;
 
-import java.util.Date;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -13,10 +11,8 @@ public class Report extends RealmObject {
     @PrimaryKey
     private String title;
     private String content;
-    private String[] fileList;
-    private String[] receivers;
-    private Date reportDate;
-    private Date accidentDate;
+    private String fileList;
+    private String receivers;
     private boolean ANONYMOUS;
 
     public String getTitle() {
@@ -35,36 +31,20 @@ public class Report extends RealmObject {
         this.content = content;
     }
 
-    public String[] getFileList() {
+    public String getFileList() {
         return fileList;
     }
 
-    public void setFileList(String[] fileList) {
+    public void setFileList(String fileList) {
         this.fileList = fileList;
     }
 
-    public String[] getReceivers() {
+    public String getReceivers() {
         return receivers;
     }
 
-    public void setReceivers(String[] receivers) {
+    public void setReceivers(String receivers) {
         this.receivers = receivers;
-    }
-
-    public Date getReportDate() {
-        return reportDate;
-    }
-
-    public void setReportDate(Date reportDate) {
-        this.reportDate = reportDate;
-    }
-
-    public Date getAccidentDate() {
-        return accidentDate;
-    }
-
-    public void setAccidentDate(Date accidentDate) {
-        this.accidentDate = accidentDate;
     }
 
     public boolean isANONYMOUS() {

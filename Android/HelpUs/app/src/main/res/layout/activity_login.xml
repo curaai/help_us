@@ -35,19 +35,19 @@
           android:orientation="vertical">
 
          <EditText
-             android:id="@+id/regist_name"
+             android:id="@+id/sign_in_id"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:hint="아이디" />
 
          <EditText
-             android:id="@+id/regist_id"
+             android:id="@+id/sign_in_pw"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:hint="비밀번호" />
 
          <Button
-             android:id="@+id/sign_up_btn"
+             android:id="@+id/sign_in_btn"
              android:layout_width="match_parent"
              android:layout_height="40dp"
              android:layout_marginTop="32dp"

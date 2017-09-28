@@ -1,16 +1,24 @@
 package stack.birds.helpus.Item;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by sch on 2017-07-31.
  */
 
-public class User {
-    private String name, id, phoneNum;
+public class User extends RealmObject {
+    @PrimaryKey
+    private String id;
+    private String name;
+    private String phoneNum;
 
-    public User(String name, String id, String phoneNum) {
-        this.name = name;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
-        this.phoneNum = phoneNum;
     }
 
     public String getName() {
@@ -21,14 +29,6 @@ public class User {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -37,3 +37,4 @@ public class User {
         this.phoneNum = phoneNum;
     }
 }
+

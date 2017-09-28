@@ -1,6 +1,5 @@
 package stack.birds.helpus.Item;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -38,11 +37,6 @@ public class Record extends RealmObject {
 
     public void setFileDate(Date fileDate) {
         this.fileDate = fileDate;
-    }
-
-    public String getStringFileDate() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy mm dd");
-        return format.format(fileDate);
     }
 
 }

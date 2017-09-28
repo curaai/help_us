@@ -1,20 +1,20 @@
-package stack.birds.helpus.TabFragment;
+package stack.birds.helpus.ContactActivity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import stack.birds.helpus.Adapter.ContactAdapter;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import stack.birds.helpus.Item.User;
-import stack.birds.helpus.Helper.UserDBHelper;
 import stack.birds.helpus.R;
 
 /**
@@ -23,10 +23,10 @@ import stack.birds.helpus.R;
 
 public class ContactFragment extends Fragment {
 
+    private String TAG = "contact";
     View view;
+    Realm mRealm;
 
-    private List<User> userList;
-    UserDBHelper userDBHelper;
     ContactAdapter contactAdapter;
     RecyclerView recyclerView;
 
@@ -40,17 +40,20 @@ public class ContactFragment extends Fragment {
     }
 
     private void initRecyclerView() {
-        userList = new ArrayList<User>();
-
-        userList.add(new User("필성", "zhsir123", "010-8976-5447"));
-        userList.add(new User("재빈", "zhsir00", "010-1234-5678"));
-        userList.add(new User("근철", "zhsir00", "010-9876-5432"));
-        userList.add(new User("null", "null", "010-0000-0000"));
-
         recyclerView = (RecyclerView) view.findViewById(R.id.contact_recycler);
-        contactAdapter = new ContactAdapter(userList);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        contactAdapter = new ContactAdapter(getUserList(), getActivity());
         recyclerView.setAdapter(contactAdapter);
+    }
+
+    private List<User> getUserList() {
+        mRealm = Realm.getDefaultInstance();
+        RealmResults<User> result = mRealm.where(User.class).findAll();
+        List<User> list = mRealm.copyFromRealm(result);
+        Log.d(TAG, "user list size is " + list.size());
+        // last item is contact add button
+        list.add(null);
+        return list;
     }
 }

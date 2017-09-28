@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ReportPictureFragment extends Fragment{
 
         imageList = getImagesFromPhone(context);
         Log.d("picture", imageList.toString());
-        adapter = new PictureAdapter(imageList);
+        adapter = new PictureAdapter(imageList, context);
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -94,6 +95,7 @@ public class ReportPictureFragment extends Fragment{
 class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHolder>{
     private List<Integer> isClicked;
     private List<String> picturesPath;
+    private Context context;
 
     class PictureViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
@@ -106,8 +108,9 @@ class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHold
     }
 
 
-    public PictureAdapter(List<String> picturePath) {
+    public PictureAdapter(List<String> picturePath, Context context) {
         this.picturesPath = picturePath;
+        this.context = context;
     }
 
     @Override
@@ -129,10 +132,11 @@ class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHold
             public void onClick(View v) {
                 if(isClicked.contains(position)) {
                     isClicked.remove(Integer.valueOf(position));
-                } else {
+                } else if(isClicked.size() < 3) {
                     isClicked.add(position);
                     holder.image.setBackgroundColor(Color.CYAN);
                     holder.image.setColorFilter(Color.rgb(0, 0, 0));
+                    Toast.makeText(context, "이미지를 3개이상 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

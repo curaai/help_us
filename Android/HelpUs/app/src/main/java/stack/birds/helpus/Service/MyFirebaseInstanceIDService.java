@@ -15,11 +15,11 @@ import java.util.HashMap;
  * Created by dsm2016 on 2017-07-24.
  */
 
-public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private static final String TAG = "MyFirebaseIIDService";
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+    private static final String TAG = "FirebaseToken";
     private String HOST_URL = "https://dmlwlsdk07.000webhostapp.com/register.php";
 
-    public FirebaseInstanceIDService(Context context) {
+    public MyFirebaseInstanceIDService(Context context) {
         final String token = FirebaseInstanceId.getInstance().getToken();
 
         HashMap<String, String> param = new HashMap<String, String>();

@@ -7,16 +7,19 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import stack.birds.helpus.Adapter.MainPagerAdapter;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
+
+    final String TAG = "MAIN";
 
     TabLayout tabLayout;
     ViewPager viewPager;
     MainPagerAdapter pagerAdapter;
 
     static final int PERMISSION_REQUEST_CODE = 1;
-    public static String[] PERMISSIONS = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    public static String[] PERMISSIONS = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.INTERNET", "android.permission.READ_CONTACTS"};
 
     final int[] icons = new int[] {R.drawable.home, R.drawable.send, R.drawable.list, R.drawable.icon, R.drawable.setting};
 
@@ -51,6 +54,48 @@ public class MainActivity extends AppCompatActivity {
             requestNecessaryPermissions(PERMISSIONS);
         }
 
+        if (hasPermissions(PERMISSIONS)) {
+
+            // Realm DB Setting
+            defaultDBSetting();
+
+            // 메인 액티비티의 탭
+            tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            tabLayout.addTab(tabLayout.newTab().setText("홈"));
+            tabLayout.addTab(tabLayout.newTab().setText("신고하기"));
+            tabLayout.addTab(tabLayout.newTab().setText("신고내역"));
+            tabLayout.addTab(tabLayout.newTab().setText("신고접수"));
+            tabLayout.addTab(tabLayout.newTab().setText("설정"));
+
+            // 각 탭의 아이콘 설정
+            for(int i = 0; i < icons.length; i++)
+                tabLayout.getTabAt(i).setIcon(icons[i]);
+
+            // viewpager 생성 밑 mainPagerAdapter 설정
+            viewPager = (ViewPager) findViewById(R.id.main_pager);
+            pagerAdapter = new MainPagerAdapter(
+                    getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(pagerAdapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                // 탭이 선택됬을 때 해당 viewPager page로 이동
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        }
+
         //  테스팅 시에는 잠시 취소
 //        final AccountService account = new AccountService(getApplicationContext());
 //        int result = account.autoLogin();
@@ -61,40 +106,17 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
 
-        // 메인 액티비티의 탭
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("홈"));
-        tabLayout.addTab(tabLayout.newTab().setText("신고하기"));
-        tabLayout.addTab(tabLayout.newTab().setText("신고내역"));
-        tabLayout.addTab(tabLayout.newTab().setText("신고접수"));
-        tabLayout.addTab(tabLayout.newTab().setText("설정"));
 
-        // 각 탭의 아이콘 설정
-        for(int i = 0; i < icons.length; i++)
-            tabLayout.getTabAt(i).setIcon(icons[i]);
+    }
 
-        // viewpager 생성 밑 mainPagerAdapter 설정
-        viewPager = (ViewPager) findViewById(R.id.main_pager);
-        pagerAdapter = new MainPagerAdapter(
-                getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            // 탭이 선택됬을 때 해당 viewPager page로 이동
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
+    public void defaultDBSetting() {
+        RealmConfiguration conf = new RealmConfiguration.Builder(this)
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(conf);
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
 
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 }
