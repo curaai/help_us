@@ -19,7 +19,7 @@
         <com.github.aakira.expandablelayout.ExpandableRelativeLayout
             android:id="@+id/expandableLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/expandableButton1"
             android:padding="16dp"
             app:ael_duration="400"
@@ -29,7 +29,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="84dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -83,7 +83,7 @@
         <com.github.aakira.expandablelayout.ExpandableRelativeLayout
             android:id="@+id/expandableLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/expandableButton1"
             android:padding="16dp"
             app:ael_duration="400"
@@ -94,7 +94,7 @@
             <LinearLayout
                 android:id="@+id/report_bottom_sheet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TabLayout

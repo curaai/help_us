@@ -79,11 +79,7 @@ public class ReportFragment extends Fragment {
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userList.size() == 0) {
-                    Toast.makeText(getActivity(), "신고를 받을 대상을 지정해주세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    report();
-                }
+                report();
             }
         });
         contactButton = (Button) view.findViewById(R.id.contact_button);
@@ -244,7 +240,7 @@ public class ReportFragment extends Fragment {
                 .addFormDataPart("id", ID)
                 .addFormDataPart("title", reportTitle)
                 .addFormDataPart("content", reportContent)
-                .addFormDataPart("receivers", users);
+                .addFormDataPart("receivers", "aaaaaa");
 
         if (pictureList != null) {
             for(int i = 0; i < pictureList.size(); i++) {
