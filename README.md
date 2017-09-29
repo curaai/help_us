@@ -9,3 +9,6 @@ Smarteen App Challenge 2017 <br>
 >Server : 이재빈 <br>
 >Android : 정필성, 유지현, 최혜성 <br>
 >Design : 유지현, 최혜성
+
+
+*STAC 끝 수고링*
