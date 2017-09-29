@@ -34,15 +34,10 @@
 
       function send_notification($tokens, $message)
     	{
-        $msg = array
-          (
-		          'body' 	=> 'Body  Of Notification',
-		          'title'	=> 'Title Of Notification',
-          );
     		$url = 'https://fcm.googleapis.com/fcm/send';
     		$fields = array(
     			 'registration_ids' => $tokens,
-           "notification" => $msg
+    			 'data' => $message
     			);
     		$headers = array(
     			'Authorization:key = AAAA3RVU2Yw:APA91bHI21QZ-OTViwAjdKJ2MD96tV2yBzWlQ4CwaKhUZblTTOghopgf-l93S5OM0AafugcSZJCVF-YSsuQQYjxylW_YUXqyGM4hQB5ygKcTqKt2bSwodrNAKxtesYu7-h__p_gNyyfK',
